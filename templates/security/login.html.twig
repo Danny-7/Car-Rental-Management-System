@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter | RentCar
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid h-100">
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1 class="text-primary p-3 mb-3">Se connecter</h1>
+            <form method="post" class="w-25 p-3">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as
+                        {{ app.user.username }},
+                        <a href="{{ path('app.logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Adresse email" class="form-control" required autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="inputPassword" placeholder="Mot de passe" class="form-control" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+                <button class="btn btn-primary" type="submit">
+                    Se connecter
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Nos voitures {% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="cars d-flex mx-auto justify-content-between flex-wrap" style="width: 80%">
+            {% for car in cars %}
+                <div class="card" style="width: 400px; margin: 1em auto">
+                    <img class="card-img-top" src="{{car.image}}" alt="Card image cap">
+                    <div class="card-body">
+                        <a href="{{ path('car.show', {id : car.id}) }}" class=""card-title>{{ car.type }}</a>
+                        <h5 class="title">{{car.amount}}</h5>
+                        <p class="card-text">GGGG</p>
+                        <a href="{{ path('cart.add', {id : car.id}) }}" class="btn btn-primary">Louer</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

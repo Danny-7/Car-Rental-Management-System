@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'enregistrer | RentCar
+{% endblock %}
+
+{% block content %}
+	<div class="container-fluid h-100">
+		<div class="d-flex h-100 justify-content-center align-items-center">
+			<form method="post" class="w-50 p-3">
+				{{ form_start(form) }}
+
+				{{ form_row(form.name, { 'attr' : { 'placeholder' : "Entrez votre nom"}})}}
+
+				{{ form_row(form.password, { 'attr' : { 'placeholder' : "Entrez votre mot de passe"}})}}
+
+				{{ form_row(form.email, { 'attr' : { 'placeholder' : "Entrez votre adresse email"}})}}
+
+				{{ form_row(form.role, { 'attr' : { 'placeholder' : "Choisissez le type d'utilisateur"}})}}
+
+				<button type="submit" class="btn bg-primary mx-auto text-light px-5 py-2">S'inscrire</button>
+
+				{{form_end(form)}}
+			</form>
+		</div>
+
+	</div>
+{% endblock %}

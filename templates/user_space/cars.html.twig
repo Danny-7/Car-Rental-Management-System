@@ -1,0 +1,30 @@
+{%  extends 'user_space/cars.html.twig' %}
+
+{% block title %} Mes véhicules {% endblock %}
+
+{% block dashboard %}
+    <div class="container-fluid h-100">
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Caractéristiques</th>
+                    <th>Montant de la location</th>
+                    <th>Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for car in cars %}
+                    <tr>
+                        <td>{{ car.type }}</td>
+                        <td>{{ car.datasheet }} €</td>
+                        <td>{{ car.amount }}</td>
+                        <td><img src="{{ car.image }}" alt="{{ car.type }}" style="width: 100px; height: 50px;"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

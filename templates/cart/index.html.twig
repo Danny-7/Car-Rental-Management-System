@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="container">
+            {% if items | length > 0 %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Montant de la location</th>
+                            <th>Image</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td>{{ item.item.type }}</td>
+                                <td>{{ item.item.amount }} €</td>
+                                <td><img src="{{ item.item.image }}" alt="{{ item.item.type }}" style="width: 100px; height: 50px;"></td>
+                                <td><a href="{{ path('cart.remove', { 'id': item.item.id }) }}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a></td>
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <td>{{ totalItems }} €</td>
+                        </tr>
+                        <a href="{{ path('bills.new') }}" class="btn btn-success btn-sm">Confirmer la commande</a>
+                    </tfoot>
+                </table>
+            {% else %}
+                <h1>Votre panier est vide !</h1>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
