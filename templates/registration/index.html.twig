@@ -8,7 +8,7 @@
 		<div class="d-flex h-100 justify-content-center align-items-center">
 			<form method="post" class="w-50 p-3">
 				{{ form_start(form) }}
-
+				{{form_errors(form)}}
 				{{ form_row(form.name, { 'attr' : { 'placeholder' : "Entrez votre nom"}})}}
 
 				{{ form_row(form.password, { 'attr' : { 'placeholder' : "Entrez votre mot de passe"}})}}

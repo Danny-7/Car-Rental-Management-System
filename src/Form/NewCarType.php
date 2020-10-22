@@ -4,10 +4,11 @@ namespace App\Form;
 
 use App\Entity\Car;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class NewCarType extends AbstractType
 {
@@ -59,8 +60,17 @@ class NewCarType extends AbstractType
                     '5 portes' => '5 portes'
                 ]
             ])
-            ->add('attachment', FileType::class, [
-                'mapped' => false
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'images/*'
+                        ],
+                        'mimeTypesMessage' => '.png .jpg .jpeg uniquement',
+                    ])
+                ],
             ])
         ;
     }
