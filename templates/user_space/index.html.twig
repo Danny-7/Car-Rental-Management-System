@@ -20,7 +20,16 @@
 			</ul>
 		</nav>
 		<div style="flex: 1;">
-			{% block dashboard %}{% endblock %}
+			{% block dashboard %}
+{#				{% if v_type %}#}
+{#					<div class="alert alert-success alert-dismissible fade show" role="alert">#}
+{#						Le véhicule {{ v_type }} à bien été enregistré#}
+{#						<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+{#							<span aria-hidden="true">&times;</span>#}
+{#						</button>#}
+{#					</div>#}
+{#				{% endif %}#}
+			{% endblock %}
 		</div>
 	</div>
 

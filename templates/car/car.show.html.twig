@@ -5,12 +5,12 @@
 {% block content %}
     <div class="container">
         <div class="card" style="width: 700px; margin: 1em auto">
-            <img class="card-img-top" src="{{car.image}}" alt="Card image cap">
+            <img class="card-img-top" src="{{asset('uploads/cars/')}}{{ car.image }}" alt="Card image cap" style="object-fit: contain">
             <div class="card-body">
                 <h1 class=""card-title>{{ car.type }}</h1>
                 <h5 class="title">{{car.amount}}</h5>
                 <p class="card-text">GGGG</p>
-                <a href="{{ path('car.show', {id : car.id}) }}" class="btn btn-primary">Louer</a>
+                <a href="{{ path('cart.add', {id : car.id}) }}" class="btn btn-primary">Louer</a>
             </div>
         </div>
     </div>

@@ -53,7 +53,7 @@ class CarController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $fileCar = $form->get('image')->getData();
+            $carFile = $form->get('attachment')->getData();
 
             $datasheet = array();
 
@@ -67,16 +67,17 @@ class CarController extends AbstractController
             // $json_string = $serializer->serialize($datasheet, 'json');
             $car->setDataSheet($datasheet);
 
-            // if ($fileCar) {
-            //     $carFileName = $fileUploader->upload($carFile);
-            //     $car->setImage($carFileName);
-            // }
+             if ($carFile) {
+                 $carFileName = $fileUploader->upload($carFile);
+                 $car->setImage($carFileName);
+             }
             $car->setRent("disponible");
-            $car->setImage('https://place-hold.it/500x200');
             $car->setIdOwner($this->security->getUser());
 
             $this->carService->add($car);
-            return $this->redirectToRoute('user.space');
+            return $this->render('user_space/index.html.twig', [
+                'v_type' => $car->getType()
+            ]);
         }
 
         return $this->render('car/car.new.html.twig', [
@@ -91,9 +92,9 @@ class CarController extends AbstractController
      * @param CarRepository $carRepo
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showCar($id, CarRepository $carRepo)
+    public function showCar($id)
     {
-        $car = $carRepo->find($id);
+        $car = $this->carService->getCar($id);
 
         return $this->render('car/car.show.html.twig', [
             'car' => $car

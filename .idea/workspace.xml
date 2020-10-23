@@ -12,7 +12,14 @@
   <component name="ChangeListManager">
     <list default="true" id="5f2a8eea-2691-4027-b7c5-ac3951179e3a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_space/cars.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_space/cars.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CarController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/NewCarType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/NewCarType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Car/CarService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Car/CarService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/FileUpload/FileUploader.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/FileUpload/FileUploader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/car/car.new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/car.new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/car/car.show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/car.show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/car/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_space/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_space/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,6 +152,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/user_space" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
+    <property name="settings.editor.selected.configurable" value="Symfony2.SettingsForm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -171,6 +179,7 @@
       <workItem from="1603232078443" duration="1413000" />
       <workItem from="1603266535520" duration="41500000" />
       <workItem from="1603343349556" duration="1245000" />
+      <workItem from="1603483008690" duration="9091000" />
     </task>
     <servers />
   </component>
@@ -210,5 +219,9 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="794" y="448" key="NewPhpFileDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603301515413" />
+    <state x="461" y="170" key="SettingsEditor" timestamp="1603483405289">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1603483405289" />
   </component>
 </project>

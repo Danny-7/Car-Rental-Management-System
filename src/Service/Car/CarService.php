@@ -29,6 +29,11 @@ class CarService
         return $cars;
     }
 
+    public function getCar(int $id) :Car
+    {
+        return $this->carRepository->find($id);
+    }
+
     public function add(Car $car)
     {
         $this->carEm->persist($car);

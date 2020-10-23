@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\Image;
 
 class NewCarType extends AbstractType
 {
@@ -60,14 +61,11 @@ class NewCarType extends AbstractType
                     '5 portes' => '5 portes'
                 ]
             ])
-            ->add('image', FileType::class, [
+            ->add('attachment', FileType::class, [
                 'mapped' => false,
                 'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'images/*'
-                        ],
+                    new Image([
+                        'maxSize' => '2048k',
                         'mimeTypesMessage' => '.png .jpg .jpeg uniquement',
                     ])
                 ],
