@@ -100,21 +100,21 @@ class CarController extends AbstractController
             'car' => $car
         ]);
     }
-
-    /**
-     * @Route("/user/cars/{id}", name="cars.renter")
-     * @param $id
-     * @param CarRepository $carRepo
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function ShowCarsOfRenter($id, CarRepository $carRepo)
-    {
-        $cars = $carRepo->find($id);
-
-        return $this->render('user_space/index.html.twig', [
-            'cars' => $cars
-        ]);
-    }
+//
+//    /**
+//     * @Route("/user/cars/{id}", name="cars.renter")
+//     * @param $id
+//     * @param CarRepository $carRepo
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     */
+//    public function ShowCarsOfRenter($id, CarRepository $carRepo)
+//    {
+//        $cars = $carRepo->find($id);
+//
+//        return $this->render('user_space/cars.html.twig', [
+//            'cars' => $cars
+//        ]);
+//    }
 
 
 }

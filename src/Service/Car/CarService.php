@@ -42,7 +42,6 @@ class CarService
 
     public function remove(int $id)
     {
-        $car = new Car();
         $car = $this->carRepository->find($id);
 
         $this->carEm->remove($car);

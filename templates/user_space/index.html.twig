@@ -9,7 +9,7 @@
 			<li class="navbar-brand">Loueur</li>
 			<ul class="navbar-nav mr-auto" style="display: block;">
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('user.space.cars') }}">Mes voitures</a>
+					<a class="nav-link" href="{{ path('user.space.cars', { id : app.user.id}) }}">Mes voitures</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('car.new') }}">Ajouter un véhicule</a>
@@ -20,16 +20,7 @@
 			</ul>
 		</nav>
 		<div style="flex: 1;">
-			{% block dashboard %}
-{#				{% if v_type %}#}
-{#					<div class="alert alert-success alert-dismissible fade show" role="alert">#}
-{#						Le véhicule {{ v_type }} à bien été enregistré#}
-{#						<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
-{#							<span aria-hidden="true">&times;</span>#}
-{#						</button>#}
-{#					</div>#}
-{#				{% endif %}#}
-			{% endblock %}
+			{% block dashboard %}{% endblock %}
 		</div>
 	</div>
 

@@ -1,30 +1,63 @@
-{%  extends 'user_space/cars.html.twig' %}
+{%  extends 'user_space/index.html.twig' %}
 
-{% block title %} Mes véhicules {% endblock %}
+{% block title %}
+	Mes véhicules
+{% endblock %}
 
 {% block dashboard %}
-    <div class="container-fluid h-100">
-        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Caractéristiques</th>
-                    <th>Montant de la location</th>
-                    <th>Image</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for car in cars %}
-                    <tr>
-                        <td>{{ car.type }}</td>
-{#                        <td>{{ car.datasheet }} €</td>#}
-                        <td>{{ car.amount }}</td>
-                        <td><img src="{{ car.image }}" alt="{{ car.type }}" style="width: 100px; height: 50px;"></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="container-fluid h-100">
+		<div class="d-flex flex-column h-100 justify-content-center align-items-center">
+			<table class="table w-75">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Caractéristiques</th>
+						<th>Montant de la location</th>
+						<th>Image</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for car in cars %}
+						<tr>
+							<td>{{ car.type }}</td>
+							<td>
+								<table class="table">
+									<thead>
+										<th>Catégorie</th>
+										<th>Carburant</th>
+										<th>Moteur</th>
+										<th>Boite de vitesse</th>
+										<th>Nombre de portes</th>
+									</thead>
+									<tbody>
+										<td>{{car.datasheet.category}}</td>
+										<td>{{car.datasheet.fuel}}</td>
+										<td>{{car.datasheet.engine}}</td>
+										<td>{{car.datasheet.shift}}</td>
+										<td>{{car.datasheet.nb_portes}}</td>
+									</tbody>
+								</table>
+							</td>
+							<td>{{ car.amount }}
+								€</td>
+							<td><img src="{{asset('uploads/cars/')}}{{ car.image }}" alt="{{ car.type }}" style="width: 100px; height: 50px;"></td>
+							<td>
+								<a href="{{ path('user.space.car.edit', {id : car.id }) }}">
+									<i class="fas fa-edit btn btn-warning"></i>
+								</a>
+							</td>
+							<td>
+								<a href="{{ path('user.space.car.delete', {id : car.id } ) }}">
+									<i class="fas fa-trash btn btn-danger"></i>
+								</a>
+							</td>
+
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}

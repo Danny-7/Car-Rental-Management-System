@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Service\Cart\CartService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BillController extends AbstractController
 {
