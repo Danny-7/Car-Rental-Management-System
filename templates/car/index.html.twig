@@ -13,7 +13,11 @@
                         <a href="{{ path('car.show', {id : car.id}) }}" class=""card-title>{{ car.type }}</a>
                         <h5 class="title">{{car.amount}}</h5>
                         <p class="card-text">GGGG</p>
-                        <a href="{{ path('cart.add', {id : car.id}) }}" class="btn btn-primary">Louer</a>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a href="{{ path('car.rent', {id : car.id}) }}" class="btn btn-primary">Louer</a>
+                        {% else %}
+                            <a href="{{ path('car.show', {id : car.id}) }}" class="btn btn-primary">En savoir plus</a>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

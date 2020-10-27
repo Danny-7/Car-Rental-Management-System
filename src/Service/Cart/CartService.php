@@ -3,6 +3,7 @@
 namespace App\Service\Cart;
 
 use App\Repository\CarRepository;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService {
@@ -18,11 +19,11 @@ class CartService {
         $this->cartData = [];
     }
 
-    public function add(int $id)
+    public function add(int $id, array $rentOptions)
     {
         $cart = $this->session->get('cart', []);
 
-        $cart[$id] = $id ;
+        $cart[$id] = [$id, $rentOptions] ;
 
         $this->session->set('cart', $cart);
     }
@@ -39,10 +40,10 @@ class CartService {
     public function getFullCart() :array
     {
         $cart = $this->session->get('cart', []);
-
         foreach ($cart as $id){
             $this->cartData[] = [
-                'item' => $this->carRepository->find($id)
+                'item' => $this->carRepository->find($id[0]),
+                'rentOptions' => $id[1]
             ];
         }
 
@@ -58,5 +59,12 @@ class CartService {
 
         return $totalItems;
     }
+
+    public function clear()
+    {
+        $this->session->set('cart', []);
+        $this->cartData = [];
+    }
+
 }
 

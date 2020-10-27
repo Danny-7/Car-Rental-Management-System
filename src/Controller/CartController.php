@@ -24,18 +24,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/cart/add/{id}", name="cart.add")
-     * @param $id
-     * @param CartService $cartService
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function add($id, CartService $cartService)
-    {
-        $cartService->add($id);
-        return $this->redirectToRoute('cars');
-    }
-
-    /**
      * @Route("/cart/remove/{id}", name="cart.remove")
      * @param $id
      * @param CartService $cartService

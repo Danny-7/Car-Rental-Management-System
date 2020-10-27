@@ -5,24 +5,19 @@ namespace App\Controller;
 use App\Entity\Car;
 use App\Form\NewCarType;
 use App\Service\Car\CarService;
+use App\Service\Cart\CartService;
 use App\Service\FileUpload\FileUploader;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class CarController extends AbstractController
 {
-    private $security;
     private $carService;
 
-    public function __construct(Security $security, CarService $carService)
+    public function __construct(CarService $carService)
     {
-        $this->security = $security;
         $this->carService = $carService;
     }
 
@@ -41,8 +36,8 @@ class CarController extends AbstractController
     /**
      * @Route("/car/new", name="car.new")
      * @param Request $request
-     * @param EntityManagerInterface $em
-     * @param CarRepository $carRepo
+     * @param FileUploader $fileUploader
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createCar(Request $request, FileUploader $fileUploader)
     {
@@ -63,8 +58,6 @@ class CarController extends AbstractController
             $datasheet['shift'] = $form->get('shift')->getData();
             $datasheet['nb_portes'] = $form->get('nb_portes')->getData();
 
-            // $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
-            // $json_string = $serializer->serialize($datasheet, 'json');
             $car->setDataSheet($datasheet);
 
              if ($carFile) {
@@ -72,7 +65,7 @@ class CarController extends AbstractController
                  $car->setImage($carFileName);
              }
             $car->setRent("disponible");
-            $car->setIdOwner($this->security->getUser());
+            $car->setIdOwner($this->getUser());
 
             $this->carService->add($car);
             return $this->render('user_space/index.html.twig', [
@@ -89,7 +82,6 @@ class CarController extends AbstractController
     /**
      * @Route("/car/{id}", name="car.show")
      * @param $id
-     * @param CarRepository $carRepo
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showCar($id)
@@ -97,24 +89,43 @@ class CarController extends AbstractController
         $car = $this->carService->getCar($id);
 
         return $this->render('car/car.show.html.twig', [
-            'car' => $car
+            'car' => $car,
         ]);
     }
-//
-//    /**
-//     * @Route("/user/cars/{id}", name="cars.renter")
-//     * @param $id
-//     * @param CarRepository $carRepo
-//     * @return \Symfony\Component\HttpFoundation\Response
-//     */
-//    public function ShowCarsOfRenter($id, CarRepository $carRepo)
-//    {
-//        $cars = $carRepo->find($id);
-//
-//        return $this->render('user_space/cars.html.twig', [
-//            'cars' => $cars
-//        ]);
-//    }
+
+    /**
+     * @Route("/car/rent/{id}", name="car.rent")
+     * @param $id
+     * @param Request $request
+     * @param CartService $cartService
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function rentCar($id, Request $request, CartService $cartService)
+    {
+        $car = $this->carService->getCar($id);
+
+        $form = $this->createFormBuilder()
+            ->add('startDate', DateType::class, [
+                'widget' => 'single_text'
+            ])
+            ->add('endDate', DateType::class, [
+                'widget' => 'single_text'
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $cartService->add($id, $form->getData());
+
+            return $this->redirectToRoute('cars');
+        }
+
+        return $this->render('car/car.rent.html.twig', [
+            'car' => $car,
+            'form' => $form->createView()
+        ]);
+    }
 
 
 }

@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\Service\Bill\BillingService;
 use App\Service\Cart\CartService;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BillController extends AbstractController
@@ -20,18 +20,20 @@ class BillController extends AbstractController
     /**
      * @Route("/bill/new", name="bills.new")
      * @param CartService $cartService
+     * @param BillingService $billingService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createBill(CartService $cartService)
+    public function createBill(CartService $cartService, BillingService $billingService)
     {
         $order = $cartService->getFullCart();
-        $input = $this->createFormBuilder()
-            ->add('endDate', DateType::class)
-            ->getForm();
+        foreach ($order as $item){
+            $rentOptions = $item['rentOptions'];
+            $car = $item['item'];
+            $billingService->createBill($this->getUser(), $car, $rentOptions);
+        }
+        $billingService->flush();
+        $cartService->clear();
 
-        return $this->render('bill/bills.new.html.twig', [
-            'order' => $order,
-            'input' => $input
-        ]);
+        return $this->redirectToRoute('cars');
     }
 }

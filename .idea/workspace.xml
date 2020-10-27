@@ -7,14 +7,37 @@
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:alpha" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f2a8eea-2691-4027-b7c5-ac3951179e3a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/S7-modele-renault-clio-4.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/audi-a3.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/cayennejpg.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/golf.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/macan.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/mercedes-benz-c-class.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/mercedesA.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/cars/peugeot208.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/BillController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BillController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CarController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserSpaceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserSpaceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_space/cars.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_space/cars.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Billing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Billing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Car.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Car.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Bill/BillService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Bill/BillingService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Cart/CartService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Cart/CartService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/car/car.show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/car.show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/car/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cart/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +170,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/user_space" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -178,6 +201,8 @@
       <workItem from="1603535281384" duration="2068000" />
       <workItem from="1603570904206" duration="4330000" />
       <workItem from="1603633580375" duration="77000" />
+      <workItem from="1603733413858" duration="3097000" />
+      <workItem from="1603802149720" duration="21836000" />
     </task>
     <task id="LOCAL-00001" summary="add car features added and render true cars from db">
       <created>1603494097316</created>
@@ -197,7 +222,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="alpha" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -209,14 +246,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="add car features added and render true cars from db" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="207" key="#com.intellij.ide.util.MemberChooser" timestamp="1603268078655">
+    <state x="765" y="207" key="#com.intellij.ide.util.MemberChooser" timestamp="1603822187575">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="765" y="207" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1603268078655" />
-    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1603270353951">
+    <state x="765" y="207" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1603822187575" />
+    <state x="802" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1603809676392">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603270353951" />
+    <state x="802" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603809676392" />
+    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1603803219134">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603803219134" />
     <state x="740" y="267" key="FileChooserDialogImpl" timestamp="1603266657113">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -229,13 +270,17 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="794" y="448" key="NewPhpFileDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603301515413" />
-    <state x="461" y="170" key="SettingsEditor" timestamp="1603570664112">
+    <state x="461" y="170" key="SettingsEditor" timestamp="1603809797957">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1603570664112" />
+    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1603809797957" />
     <state x="552" y="245" key="Vcs.Push.Dialog.v2" timestamp="1603494102786">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1603494102786" />
+    <state x="677" y="294" key="refactoring.ChangeSignatureDialog" timestamp="1603804793184">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="677" y="294" key="refactoring.ChangeSignatureDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603804793184" />
   </component>
 </project>

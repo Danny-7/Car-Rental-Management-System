@@ -1,0 +1,17 @@
+{% extends 'car/car.show.html.twig' %}
+
+{% block title %}
+Louer le véhicule
+{% endblock %}
+
+{% block formRent %}
+    <h3 class="mt-5">Veuillez choisir une date de début et fin de location </h3>
+    <form method="POST" class="form">
+        {{ form_start(form) }}
+        {{ form_row(form.startDate, { 'label' : 'Date de début' }) }}
+        {{ form_row(form.endDate, { 'label' : 'Date de fin' }) }}
+        <button type="submit" class="btn btn-primary">Louer</button>
+        {{ form_end(form) }}
+    </form>
+{% endblock %}
+

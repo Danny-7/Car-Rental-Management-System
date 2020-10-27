@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BillingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=BillingRepository::class)
@@ -18,13 +19,13 @@ class Billing
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $idUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Car::class)
+     * @ORM\ManyToOne(targetEntity=Car::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $idCar;
@@ -59,7 +60,7 @@ class Billing
         return $this->idUser;
     }
 
-    public function setIdUser(?User $idUser): self
+    public function setIdUser(?UserInterface $idUser): self
     {
         $this->idUser = $idUser;
 

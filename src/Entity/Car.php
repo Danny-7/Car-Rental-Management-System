@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CarRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CarRepository::class)
@@ -117,7 +118,7 @@ class Car
         return $this->idOwner;
     }
 
-    public function setIdOwner(?User $idOwner): self
+    public function setIdOwner(?UserInterface $idOwner): self
     {
         $this->idOwner = $idOwner;
 
