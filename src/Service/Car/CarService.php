@@ -31,7 +31,7 @@ class CarService
 
     public function getCar(int $id) :Car
     {
-        return $this->carRepository->find($id);
+         return $this->carRepository->findOneBy(['id' => $id]);
     }
 
     public function add(Car $car)
@@ -47,5 +47,10 @@ class CarService
         $this->carEm->remove($car);
         $this->carEm->flush();
     }
-    
+
+    public function return(int $id)
+    {
+        // update status
+    }
+
 }

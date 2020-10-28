@@ -10,8 +10,15 @@
                     <img class="card-img-top" src="{{asset('uploads/cars/')}}{{ car.image }}" alt="Card image cap" style="object-fit: contain">
                     <div class="card-body">
                         <h1 class=""card-title>{{ car.type }}</h1>
-                        <h5 class="title">{{car.amount}}</h5>
-                        <p class="card-text">GGGG</p>
+                        <h5 class="title">{{car.amount}} €/J</h5>
+                        <ul class="card-text">
+                            <li>{{ car.datasheet['category'] }}</li>
+                            <li>{{ car.datasheet['fuel'] }}</li>
+                            <li>{{ car.datasheet['engine'] }}</li>
+                            <li>{{ car.datasheet['shift'] }}</li>
+                            <li>{{ car.datasheet['nb_portes'] }}</li>
+                        </ul>
+                        <p class="card-text">Quantité en stock : {{ car.quantity }}</p>
                     </div>
                 </div>
             </div>

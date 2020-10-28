@@ -28,8 +28,9 @@ class BillController extends AbstractController
         $order = $cartService->getFullCart();
         foreach ($order as $item){
             $rentOptions = $item['rentOptions'];
+            $quantity = $item['quantity'];
             $car = $item['item'];
-            $billingService->createBill($this->getUser(), $car, $rentOptions);
+            $billingService->createBill($this->getUser(), $car, $rentOptions, $quantity);
         }
         $billingService->flush();
         $cartService->clear();

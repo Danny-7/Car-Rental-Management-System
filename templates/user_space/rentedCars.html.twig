@@ -1,0 +1,37 @@
+{% extends 'user_space/index.html.twig' %}
+
+{% block title %}
+Véhicules loués
+{% endblock %}
+
+{% block dashboard %}
+    <div class="container-fluid h-100">
+        <div class="">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Véhicule</th>
+                    <th>Client</th>
+                    <th>Date de location</th>
+                    <th>Date de fin de location</th>
+                    <th>Montant en €</th>
+                    <th>Photo</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for bill in bills %}
+                    <tr>
+                        <td>{{ bill[1].type }}</td>
+                        <td>{{ bill[2].name }}</td>
+                        <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
+                        <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
+                        <td>{{ bill[0].price }} €</td>
+                        <td><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+

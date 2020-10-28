@@ -7,10 +7,12 @@ use App\Form\NewCarType;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
 use App\Service\FileUpload\FileUploader;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use function Sodium\add;
 
 class CarController extends AbstractController
 {
@@ -51,7 +53,7 @@ class CarController extends AbstractController
             $carFile = $form->get('attachment')->getData();
 
             $datasheet = array();
-
+            
             $datasheet['category'] = $form->get('category')->getData();
             $datasheet['fuel'] = $form->get('fuel')->getData();
             $datasheet['engine'] = $form->get('engine')->getData();
@@ -105,6 +107,7 @@ class CarController extends AbstractController
         $car = $this->carService->getCar($id);
 
         $form = $this->createFormBuilder()
+            ->add('quantity',IntegerType::class)
             ->add('startDate', DateType::class, [
                 'widget' => 'single_text'
             ])
@@ -116,7 +119,7 @@ class CarController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $cartService->add($id, $form->getData());
+            $cartService->add($id, $form->getData(), (int)$form->get('quantity')->getData());
 
             return $this->redirectToRoute('cars');
         }

@@ -42,7 +42,7 @@
 							</td>
 							<td>{{ car.amount }}
 								€</td>
-							<td><img src="{{asset('uploads/cars/')}}{{ car.image }}" alt="{{ car.type }}" style="width: 100px; height: 50px;"></td>
+							<td><img src="{{asset('uploads/cars/')}}{{ car.image }}" alt="{{ car.type }}" style="height: 100px; object-fit: cover"></td>
 							<td>
 								<a href="{{ path('user.space.car.edit', {id : car.id }) }}">
 									<i class="fas fa-edit btn btn-warning"></i>

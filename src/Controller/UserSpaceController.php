@@ -2,30 +2,26 @@
 
 namespace App\Controller;
 
-use App\Entity\Car;
 use App\Form\NewCarType;
+use App\Service\Bill\BillingService;
 use App\Service\Car\CarService;
-use App\Repository\CarRepository;
 use App\Service\FileUpload\FileUploader;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\User\UserService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UserSpaceController extends AbstractController
 {
-
-    private $security;
+    private $userService;
     private $carService;
+    private $billingService;
 
-    public function __construct(Security $security, CarService $carService)
+    public function __construct(UserService $userService, CarService $carService, BillingService $billingService)
     {
-        $this->security = $security;
+        $this->userService = $userService;
         $this->carService = $carService;
+        $this->billingService = $billingService;
     }
 
     /**
@@ -38,16 +34,76 @@ class UserSpaceController extends AbstractController
 
     /**
      * @Route("/user/space/cars/{id}", name="user.space.cars")
-     * @param CarRepository $carRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showCars(int $id, CarRepository $carRepository)
+    public function showCars(int $id)
     {
         $cars = $this->carService->getAllCarsByOwnerId($id);
         return $this->render("user_space/cars.html.twig", [
             'cars' => $cars
         ]);
     }
+
+    /**
+     * @Route("/user/space/client/rentals-{id}", name="user.space.client.rentals")
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showRentals(int $id)
+    {
+        $bills = $this->billingService->showBillsOfUser($id);
+        $billsFormatted = array();
+        foreach ($bills as $bill){
+            $car = $this->carService->getCar($bill->getIdCar()->getId());
+            array_push($billsFormatted, [$bill, $car]);
+        }
+
+        return $this->render('user_space/client/rentals.html.twig', [
+            'bills' => $billsFormatted
+        ]);
+    }
+
+    /**
+     * @Route("/user/space/client/bills-{id}", name="user.space.client.bills")
+     * @param int $id
+     */
+    public function showBills(int $id)
+    {
+        $bills = $this->billingService->showBillsOfUser($id);
+        $billsFormatted = array();
+        foreach ($bills as $bill){
+            $car = $this->carService->getCar($bill->getIdCar()->getId());
+            $renter = $this->userService->getUser($bill->getIdUser()->getId());
+            array_push($billsFormatted, [$bill, $car, $renter]);
+        }
+
+        return $this->render('user_space/client/bills.html.twig', [
+            'bills' => $billsFormatted
+        ]);
+    }
+
+    /**
+     * @Route("/user/space/renter/rented/cars", name="user.space.renter.cars.rented")
+     */
+    public function showRentedCars()
+    {
+        $bills = $this->billingService->showBills();
+        $filteredBills = array();
+        foreach ($bills as $bill){
+            $car = $this->carService->getCar($bill->getIdCar()->getId());
+            $owner = $this->userService->getUser($car->getIdOwner()->getId());
+            $renter =  $this->userService->getUser($bill->getIdUser()->getId());
+            if($owner->getId() === $this->getUser()->getId()){
+                array_push($filteredBills, [$bill, $car, $renter]);
+            }
+        }
+//        dd($filteredBills);
+
+        return $this->render('user_space/rentedCars.html.twig', [
+            'bills' => $filteredBills
+        ]);
+    }
+
 
     /**
      * @Route("/user/space/car/delete/{id}", name="user.space.car.delete")
@@ -59,7 +115,20 @@ class UserSpaceController extends AbstractController
     }
 
     /**
+     * @Route("/user/space/car/return/{id}", name="user.space.car.return")
+     */
+    public function returnCar(int $id) {
+        $this->carService->return($id);
+        $this->addFlash('message', "Le véhicule à bien été rendu");
+        return $this->redirectToRoute("user.space.client.rentals");
+    }
+
+    /**
      * @Route("/user/space/car/edit/{id}", name="user.space.car.edit")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editCar(Request $request, FileUploader $fileUploader, int $id) {
         $car = $this->carService->getCar($id);
@@ -86,7 +155,7 @@ class UserSpaceController extends AbstractController
                  $car->setImage($carFileName);
              }
             $car->setRent("disponible");
-            $car->setIdOwner($this->security->getUser());
+            $car->setIdOwner($this->getUser());
 
             $this->carService->add($car);
             $this->addFlash('message',"Votre véhicule à bien été modifié");

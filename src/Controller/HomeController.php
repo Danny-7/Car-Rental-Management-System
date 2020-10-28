@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Service\Cart\CartService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -13,10 +13,8 @@ class HomeController extends AbstractController
      * @param CartService $cartService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(CartService $cartService)
+    public function index()
     {
-        return $this->render('home/index.html.twig', [
-            'cartCount' => $cartService->countItems()
-        ]);
+        return $this->render('home/index.html.twig');
     }
 }

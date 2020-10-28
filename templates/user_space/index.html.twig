@@ -8,15 +8,25 @@
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="flex:0.15; height: calc(100vh - 70px); display: block">
 			<li class="navbar-brand">Loueur</li>
 			<ul class="navbar-nav mr-auto" style="display: block;">
+				{% if app.user.role == 'Entreprise' %}
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('user.space.cars', { id : app.user.id}) }}">Mes voitures</a>
+					<a class="nav-link" href="{{ path('user.space.client.rentals', { id : app.user.id}) }}">Mes locations</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('car.new') }}">Ajouter un véhicule</a>
+					<a class="nav-link" href="{{ path('user.space.client.bills', { id : app.user.id}) }}">Mes factures</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Mes factures</a>
-				</li>
+				{% elseif app.user.role == 'Loueur' %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('user.space.cars', { id : app.user.id}) }}">Mes voitures</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('car.new') }}">Ajouter un véhicule</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('user.space.renter.cars.rented') }}">Bilan des locations</a>
+					</li
+				{% endif %}
+
 			</ul>
 		</nav>
 		<div style="flex: 1;">
