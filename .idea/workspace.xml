@@ -17,6 +17,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f2a8eea-2691-4027-b7c5-ac3951179e3a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/db.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
@@ -143,11 +144,15 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1jA1JKv0FMdamGA4vvw8rAjiOcJ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/user_space" />
@@ -191,7 +196,7 @@
       <workItem from="1603802149720" duration="23556000" />
       <workItem from="1603889630375" duration="2673000" />
       <workItem from="1603897289679" duration="22635000" />
-      <workItem from="1604179989709" duration="3426000" />
+      <workItem from="1604179989709" duration="3798000" />
     </task>
     <task id="LOCAL-00001" summary="add car features added and render true cars from db">
       <created>1603494097316</created>
@@ -200,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603494097316</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="db file added for testing, user logged in when registration">
+      <created>1604186143016</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604186143016</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,8 +243,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="add car features added and render true cars from db" />
-    <option name="LAST_COMMIT_MESSAGE" value="add car features added and render true cars from db" />
+    <MESSAGE value="db file added for testing, user logged in when registration" />
+    <option name="LAST_COMMIT_MESSAGE" value="db file added for testing, user logged in when registration" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="207" key="#com.intellij.ide.util.MemberChooser" timestamp="1603900089220">
