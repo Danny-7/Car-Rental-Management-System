@@ -17,28 +17,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f2a8eea-2691-4027-b7c5-ac3951179e3a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/User/UserService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/user_space/client/bills.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/user_space/client/rentals.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/user_space/rentedCars.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/BillController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BillController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CarController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserSpaceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserSpaceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Car.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Car.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/NewCarType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/NewCarType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Bill/BillingService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Bill/BillingService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Car/CarService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Car/CarService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Cart/CartService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Cart/CartService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/car/car.new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/car.new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/car/car.rent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/car.rent.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/car/car.show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/car.show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/car/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/car/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cart/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_space/bills.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_space/cars.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_space/cars.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user_space/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user_space/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +190,8 @@
       <workItem from="1603733413858" duration="3097000" />
       <workItem from="1603802149720" duration="23556000" />
       <workItem from="1603889630375" duration="2673000" />
-      <workItem from="1603897289679" duration="22329000" />
+      <workItem from="1603897289679" duration="22635000" />
+      <workItem from="1604179989709" duration="3426000" />
     </task>
     <task id="LOCAL-00001" summary="add car features added and render true cars from db">
       <created>1603494097316</created>

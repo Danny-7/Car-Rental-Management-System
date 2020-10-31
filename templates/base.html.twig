@@ -8,7 +8,7 @@
 		</title>
 		{% block stylesheets %}
 			<style>
-				ul li a.cart .cart-basket {
+				ul li a.cart{
 					font-size: 0.6rem;
 					position: absolute;
 					top: -6px;
@@ -27,7 +27,7 @@
 	</head>
 	<body style="min-height: 100%;">
 		{% block body %}
-			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-primary position-sticky fixed-top">
 				<a class="navbar-brand" href="{{ path('home') }}">RentCar</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -51,6 +51,9 @@
 
 							<a class="btn btn-primary" href={{ path('app.login') }}>Se connecter</a>
 						{% else %}
+							<li class="nav-item mx-3" style="color: #fff; list-style-type: none">
+								Bienvenue, {{app.user.name}}
+							</li>
 							<a href="{{path('cart')}}" class="nav-link cart position-relative d-inline-flex" aria-label="View your shopping cart" style="color: #fff;">
 								<i class="fas fa-shopping-cart fa-lg"></i>
 							</a>
