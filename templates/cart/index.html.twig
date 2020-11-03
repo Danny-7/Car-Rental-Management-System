@@ -29,15 +29,15 @@
 
                             </tr>
                         {% endfor %}
-                    </tbody>
-                    <tfoot>
                         <tr>
-                            <td colspan="3">Total</td>
+                            <td colspan="4">Total</td>
                             <td>{{ totalItems }} €</td>
                         </tr>
-                        <a href="{{ path('bills.new') }}" class="btn btn-success btn-sm">Confirmer la commande</a>
-                    </tfoot>
+                    </tbody>
                 </table>
+                <div class="row float-right">
+                    <a href="{{ path('bills.new') }}" class="btn btn-success">Confirmer la commande</a>
+                </div>
             {% else %}
                 <h1>Votre panier est vide !</h1>
             {% endif %}

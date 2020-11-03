@@ -3,25 +3,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Gestion de Location
+			{% block title %}RentCar | Accueil
 			{% endblock %}
 		</title>
 		{% block stylesheets %}
 			<style>
-				ul li a.cart{
-					font-size: 0.6rem;
-					position: absolute;
-					top: -6px;
-					right: -5px;
-					width: 15px;
-					height: 15px;
-					color: #fff;
-					background-color: #fff;
-					border-radius: 50%;
-				}
+
 			</style>
-			<link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
-			<link rel="stylesjeet" href="styles/style.css">
+			<link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+			<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"/>
 		{% endblock %}
 	</head>
@@ -55,7 +45,10 @@
 								Bienvenue, {{app.user.name}}
 							</li>
 							<a href="{{path('cart')}}" class="nav-link cart position-relative d-inline-flex" aria-label="View your shopping cart" style="color: #fff;">
+								{% set cart = app.session.get('cart') %}
+								{% set length = cart ? cart | length : 0 %}
 								<i class="fas fa-shopping-cart fa-lg"></i>
+								<span class='badge badge-pill cart-count'>{{ length }}</span>
 							</a>
 							<a class="btn btn-primary" href={{ path('app.logout') }}>Se déconnecter</a>
 						{% endif %}

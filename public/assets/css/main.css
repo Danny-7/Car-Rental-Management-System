@@ -1,0 +1,22 @@
+/* home page style */
+.home {
+    background-image: url("../images/luxury-car-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center
+}
+
+/* navbar cart */
+.cart-count {
+    position: absolute;
+    top: -3px;
+    right: 0;
+    height: fit-content;
+    font-size: 12px;
+    background: #131313;
+    color: #f7f7f7;
+    padding: 2px 5px;
+    vertical-align: top;
+    margin-left: -9px;
+}

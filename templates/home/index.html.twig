@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
 
-
 {% block content %}
-
-    <div class="container h-100" style="display: flex; justify-content: center">
-        <a href="{{ path('cars') }}" class="btn btn-success my-auto">Voir nos voitures</a>
+    <div class="container-fluid h-100 home">
+        <a href="{{ path('cars') }}" class="btn btn-lg btn-outline-primary text-light my-auto">Voir nos voitures</a>
     </div>
 {% endblock %}

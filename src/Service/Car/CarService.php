@@ -53,4 +53,9 @@ class CarService
         // update status
     }
 
+    public function UpdateCarQuantity(int $id, int $quantity){
+        $carToUpdate = $this->getCar($id);
+        $carToUpdate->setQuantity($carToUpdate->getQuantity() - $quantity);
+    }
+
 }
