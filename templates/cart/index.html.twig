@@ -4,13 +4,15 @@
 
 {% block content %}
     <div class="container-fluid">
-        <div class="container">
+        <div class="container-fluid w-75">
             {% if items | length > 0 %}
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Type</th>
                             <th>Quantité</th>
+                            <th>Location en jours</th>
+                            <th>Montant du véhicule / J</th>
                             <th>Montant de la location</th>
                             <th>Image</th>
                             <th></th>
@@ -21,7 +23,9 @@
                             <tr>
                                 <td>{{ item.item.type }}</td>
                                 <td>{{ item.quantity }}</td>
-                                <td>{{ item.item.amount*item.quantity }} €</td>
+                                <td>{{ item.nbDays }}</td>
+                                <td>{{ item.item.amount }} €</td>
+                                <td>{{ item.item.amount*item.quantity*item.nbDays }} €</td>
                                 <td><img src="{{ asset('uploads/cars/') }}{{ item.item.image }}" alt="{{ item.item.type }}" style="height: 50px; object-fit: cover"></td>
                                 <td><a href="{{ path('cart.remove', { 'id': item.item.id }) }}" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i>
@@ -30,7 +34,7 @@
                             </tr>
                         {% endfor %}
                         <tr>
-                            <td colspan="4">Total</td>
+                            <td colspan="6">Total</td>
                             <td>{{ totalItems }} €</td>
                         </tr>
                     </tbody>

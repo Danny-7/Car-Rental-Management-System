@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\BillingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BillingRepository::class)
@@ -32,11 +33,13 @@ class Billing
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual("today UTC", message="La date de début de location doit être supérieure ou égale à celle d'aujourdhui")
      */
     private $startDate;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\GreaterThan("today UTC", message="La date de fin de location doit être supérieure à celle du début")
      */
     private $endDate;
 
@@ -96,7 +99,7 @@ class Billing
         return $this->endDate;
     }
 
-    public function setEndDate(\DateTimeInterface $endDate): self
+    public function setEndDate(?\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
 

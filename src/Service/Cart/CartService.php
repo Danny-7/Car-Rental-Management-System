@@ -21,8 +21,13 @@ class CartService {
     public function add(int $id, array $rentOptions, int $quantity)
     {
         $cart = $this->session->get('cart', []);
-
-        $cart[$id] = [$id, $rentOptions, $quantity] ;
+        $startDate = $rentOptions['startDate'];
+        $endDate = $rentOptions['endDate'];
+        $nbDays = (int)date('t');
+        if($endDate) {
+            $nbDays = $startDate->diff($endDate)->days;
+        }
+        $cart[$id] = [$id, $rentOptions, $quantity, $nbDays];
 
         $this->session->set('cart', $cart);
     }
@@ -43,7 +48,8 @@ class CartService {
             $this->cartData[] = [
                 'item' => $this->carRepository->find($id[0]),
                 'rentOptions' => $id[1],
-                'quantity' => $id[2]
+                'quantity' => $id[2],
+                'nbDays' => $id[3]
             ];
         }
 
@@ -53,10 +59,9 @@ class CartService {
     public function getTotalAmount() : float
     {
         $totalItems = 0;
-        foreach ($this->cartData as $car){
-            $totalItems+= $car['item']->getAmount()*$car['quantity'];
+        foreach ($this->cartData as $cart){
+            $totalItems+= ($cart['item']->getAmount()*$cart['nbDays'])*$cart['quantity'];
         }
-
         return $totalItems;
     }
 

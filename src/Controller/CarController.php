@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Billing;
 use App\Entity\Car;
 use App\Form\NewCarType;
+use App\Form\RentCarType;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
 use App\Service\FileUpload\FileUploader;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -105,22 +108,18 @@ class CarController extends AbstractController
     public function rentCar($id, Request $request, CartService $cartService)
     {
         $car = $this->carService->getCar($id);
-
-        $form = $this->createFormBuilder()
-            ->add('quantity',IntegerType::class)
-            ->add('startDate', DateType::class, [
-                'widget' => 'single_text'
-            ])
-            ->add('endDate', DateType::class, [
-                'widget' => 'single_text'
-            ])
-            ->getForm();
-
+        $bill = new Billing();
+        $form = $this->createForm(RentCarType::class, $bill);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $cartService->add($id, $form->getData(), (int)$form->get('quantity')->getData());
-
+            $data= $form->getData();
+            $rentOptions = [
+                'startDate' => $data->getStartDate(),
+                'endDate' => $data->getEndDate(),
+                'quantity' => (int)$form->get('quantity')->getData()
+            ];
+            $cartService->add($id, $rentOptions, $rentOptions['quantity']);
             return $this->redirectToRoute('cars');
         }
 

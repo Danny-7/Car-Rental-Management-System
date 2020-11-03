@@ -17,19 +17,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f2a8eea-2691-4027-b7c5-ac3951179e3a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/luxury-back.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/images/luxury-car-background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/RentCarType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rent-management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rent-management.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/BillController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/BillController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Bill/BillingService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Bill/BillingService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Car/CarService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Car/CarService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CarController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Billing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Billing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Cart/CartService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Cart/CartService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/cart/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +203,8 @@
       <workItem from="1604179989709" duration="3862000" />
       <workItem from="1604312330190" duration="791000" />
       <workItem from="1604313331267" duration="5291000" />
-      <workItem from="1604338307815" duration="16477000" />
+      <workItem from="1604338307815" duration="16790000" />
+      <workItem from="1604390567673" duration="11465000" />
     </task>
     <task id="LOCAL-00001" summary="add car features added and render true cars from db">
       <created>1603494097316</created>
@@ -276,18 +272,18 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="802" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603809676392" />
-    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1603803219134">
+    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604395342626">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603803219134" />
+    <state x="690" y="280" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1604395342626" />
     <state x="740" y="267" key="FileChooserDialogImpl" timestamp="1603266657113">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="267" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1603266657113" />
-    <state x="679" y="248" key="NewPhpClassDialog" timestamp="1603900022741">
+    <state x="679" y="248" key="NewPhpClassDialog" timestamp="1604395197519">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="679" y="248" key="NewPhpClassDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1603900022741" />
+    <state x="679" y="248" key="NewPhpClassDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1604395197519" />
     <state x="794" y="448" key="NewPhpFileDialog" timestamp="1603301515413">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
