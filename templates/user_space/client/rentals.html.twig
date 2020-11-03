@@ -24,7 +24,7 @@
                         <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
                         <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
                         <td><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
-                        <td><a href="{{ path('user.space.car.return', { id : bill[1].id}) }}" class="btn btn-danger">Rendre le véhicule</a></td>
+                        <td><a href="{{ path('user.space.car.return', {id : bill[0].id }) }}" class="btn btn-danger">Rendre le véhicule</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

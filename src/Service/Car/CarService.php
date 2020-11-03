@@ -3,6 +3,7 @@
 namespace App\Service\Car;
 
 use App\Entity\Car;
+use App\Service\Bill\BillingService;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -31,7 +32,7 @@ class CarService
 
     public function getCar(int $id) :Car
     {
-         return $this->carRepository->findOneBy(['id' => $id]);
+        return $this->carRepository->findOneBy(['id' => $id]);
     }
 
     public function add(Car $car)
@@ -50,7 +51,8 @@ class CarService
 
     public function return(int $id)
     {
-        // update status
+        $carToUpdate = $this->getCar($id);
+        $carToUpdate->setQuantity($carToUpdate->getQuantity() + 1);
     }
 
     public function UpdateCarQuantity(int $id, int $quantity){

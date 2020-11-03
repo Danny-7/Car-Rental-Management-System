@@ -51,6 +51,19 @@ class BillingService
         $this->entityManager->persist($bill);
     }
 
+    public function removeBill (int $id) {
+
+        $bill = $this->repository->find($id);
+
+        $this->entityManager->remove($bill);
+        $this->entityManager->flush();
+    }
+
+    public function getBill(int $id) :Billing
+    {
+        return $this->repository->findOneBy(['id' => $id]);
+    }
+
     public function flushBill(){
         $this->entityManager->flush();
     }

@@ -118,9 +118,17 @@ class UserSpaceController extends AbstractController
      * @Route("/user/space/car/return/{id}", name="user.space.car.return")
      */
     public function returnCar(int $id) {
-        $this->carService->return($id);
+
+        $bill = $this->billingService->getBill($id);
+
+        $this->carService->return($bill->getIdCar()->getId());
+
+        $this->billingService->removeBill($id);
+
         $this->addFlash('message', "Le véhicule à bien été rendu");
-        return $this->redirectToRoute("user.space.client.rentals");
+        return $this->redirectToRoute("user.space.client.rentals", [
+            'id' => $this->getUser()->getId()
+        ]);
     }
 
     /**
