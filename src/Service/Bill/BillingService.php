@@ -47,7 +47,8 @@ class BillingService
                 $car->getAmount())
             ->setStartDate($rentOptions['startDate'])
             ->setEndDate($rentOptions['endDate'])
-            ->setPaid(true);
+            ->setPaid(true)
+            ->setReturned(false);
         $this->entityManager->persist($bill);
     }
 
@@ -57,6 +58,15 @@ class BillingService
 
         $this->entityManager->remove($bill);
         $this->entityManager->flush();
+    }
+
+    public function returnCarBill (int $id) {
+
+        $bill = $this->repository->find($id);
+
+        $bill->setReturned(true);
+        $this->entityManager->flush();
+
     }
 
     public function getBill(int $id) :Billing
@@ -78,5 +88,20 @@ class BillingService
         return $this->repository->findBy(['idUser' => $id]);
     }
 
+    public function showBillsOfUserReturned(int $id) :array
+    {
+        return $this->repository->findBy([
+            'idUser' => $id,
+            'returned' => true            
+            ]);
+    }
+
+    public function showBillsOfUserNotReturned(int $id) :array
+    {
+        return $this->repository->findBy([
+            'idUser' => $id,
+            'returned' => false           
+            ]);
+    }
 
 }

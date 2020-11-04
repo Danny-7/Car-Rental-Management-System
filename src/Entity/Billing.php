@@ -53,6 +53,11 @@ class Billing
      */
     private $paid;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $returned;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +131,18 @@ class Billing
     public function setPaid(bool $paid): self
     {
         $this->paid = $paid;
+
+        return $this;
+    }
+
+    public function getReturned(): ?bool
+    {
+        return $this->returned;
+    }
+
+    public function setReturned(bool $returned): self
+    {
+        $this->returned = $returned;
 
         return $this;
     }

@@ -51,7 +51,7 @@ class UserSpaceController extends AbstractController
      */
     public function showRentals(int $id)
     {
-        $bills = $this->billingService->showBillsOfUser($id);
+        $bills = $this->billingService->showBillsOfUserNotReturned($id);
         $billsFormatted = array();
         foreach ($bills as $bill){
             $car = $this->carService->getCar($bill->getIdCar()->getId());
@@ -69,7 +69,7 @@ class UserSpaceController extends AbstractController
      */
     public function showBills(int $id)
     {
-        $bills = $this->billingService->showBillsOfUser($id);
+        $bills = $this->billingService->showBillsOfUserReturned($id);
         $billsFormatted = array();
         foreach ($bills as $bill){
             $car = $this->carService->getCar($bill->getIdCar()->getId());
@@ -123,7 +123,7 @@ class UserSpaceController extends AbstractController
 
         $this->carService->return($bill->getIdCar()->getId());
 
-        $this->billingService->removeBill($id);
+        $this->billingService->returnCarBill($id);
 
         $this->addFlash('message', "Le véhicule à bien été rendu");
         return $this->redirectToRoute("user.space.client.rentals", [

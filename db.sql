@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `billing` (
   `end_date` date NOT NULL,
   `price` double NOT NULL,
   `paid` tinyint(1) NOT NULL,
+  `returned` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_EC224CAA79F37AE5` (`id_user_id`),
   KEY `IDX_EC224CAAE5F14372` (`id_car_id`),
@@ -37,11 +38,11 @@ CREATE TABLE IF NOT EXISTS `billing` (
 -- Dumping data for table project.billing: ~4 rows (approximately)
 DELETE FROM `billing`;
 /*!40000 ALTER TABLE `billing` DISABLE KEYS */;
-INSERT INTO `billing` (`id`, `id_user_id`, `id_car_id`, `start_date`, `end_date`, `price`, `paid`) VALUES
-	(1, 2, 1, '2015-01-01', '2015-01-01', 300, 1),
-	(2, 2, 2, '2015-01-01', '2015-07-01', 120, 1),
-	(4, 2, 7, '2020-12-10', '2021-01-01', 750, 1),
-	(5, 2, 5, '2020-12-08', '2020-12-14', 600, 1);
+INSERT INTO `billing` (`id`, `id_user_id`, `id_car_id`, `start_date`, `end_date`, `price`, `paid`, `returned`) VALUES
+	(1, 2, 1, '2015-01-01', '2015-01-01', 300, 1, 0),
+	(2, 2, 2, '2015-01-01', '2015-07-01', 120, 1, 0),
+	(4, 2, 7, '2020-12-10', '2021-01-01', 750, 1, 0),
+	(5, 2, 5, '2020-12-08', '2020-12-14', 600, 1, 0);
 /*!40000 ALTER TABLE `billing` ENABLE KEYS */;
 
 -- Dumping structure for table project.car
