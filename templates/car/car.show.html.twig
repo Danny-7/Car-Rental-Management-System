@@ -3,7 +3,9 @@
 {% block title %} {{ car.type }} - RentCar {% endblock %}
 
 {% block content %}
+
     <div class="container">
+    
         <div class="row">
             <div class="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'col-8' : 'col-12' }}">
                 <div class="card" style="width: 700px; margin: 1em auto">

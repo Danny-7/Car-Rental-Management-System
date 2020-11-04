@@ -6,6 +6,17 @@
 {% block dashboard %}
 
     <div class="container-fluid h-100">
+
+        {% for message in app.flashes('message') %}
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Le véhicule à été correctement rendu !
+                <a href=" {{ path('user.space.client.bills', {id : user[0].id }) }} " class="alert-link"> 
+                Votre facture est disponible dans l'onglet "Mes Factures".</a>
+            </div>
+        {% endfor %}
+
+
         <div>
             <table class="table">
                 <thead>

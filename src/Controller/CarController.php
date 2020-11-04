@@ -120,6 +120,9 @@ class CarController extends AbstractController
                 'quantity' => (int)$form->get('quantity')->getData()
             ];
             $cartService->add($id, $rentOptions, $rentOptions['quantity']);
+
+            $this->addFlash('notif', "Votre commande à été ajoutée au panier.");
+
             return $this->redirectToRoute('cars');
         }
 
