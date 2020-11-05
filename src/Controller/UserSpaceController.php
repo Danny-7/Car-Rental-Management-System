@@ -45,6 +45,7 @@ class UserSpaceController extends AbstractController
     }
 
     /**
+     * Show actually cars rented ( not returned )
      * @Route("/user/space/client/rentals-{id}", name="user.space.client.rentals")
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
@@ -64,12 +65,13 @@ class UserSpaceController extends AbstractController
     }
 
     /**
+     * Show all bills of the user
      * @Route("/user/space/client/bills-{id}", name="user.space.client.bills")
      * @param int $id
      */
     public function showBills(int $id)
     {
-        $bills = $this->billingService->showBillsOfUserReturned($id);
+        $bills = $this->billingService->showBillsOfUser($id);
         $billsFormatted = array();
         foreach ($bills as $bill){
             $car = $this->carService->getCar($bill->getIdCar()->getId());
@@ -83,6 +85,7 @@ class UserSpaceController extends AbstractController
     }
 
     /**
+     * Show the rented cars of a renter
      * @Route("/user/space/renter/rented/cars", name="user.space.renter.cars.rented")
      */
     public function showRentedCars()
@@ -97,7 +100,6 @@ class UserSpaceController extends AbstractController
                 array_push($filteredBills, [$bill, $car, $renter]);
             }
         }
-//        dd($filteredBills);
 
         return $this->render('user_space/rentedCars.html.twig', [
             'bills' => $filteredBills
