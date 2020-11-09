@@ -6,7 +6,13 @@ Véhicules loués
 
 {% block dashboard %}
     <div class="container-fluid h-100">
-        <div class="">
+        <div class="form col-4">
+            {{ form_start(form) }}
+            {{ form_row(form.user, {'label' : 'Selectionnez un utilisateur'}) }}
+            <button class="btn btn-primary">Valider</button>
+            {{ form_end(form) }}
+        </div>
+        <div>
             <table class="table">
                 <thead>
                 <tr>

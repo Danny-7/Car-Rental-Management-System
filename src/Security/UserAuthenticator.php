@@ -70,7 +70,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException("L'adresse n'a pas pu être trouvée");
+            throw new CustomUserMessageAuthenticationException("L'adresse email n'est pas enregistrée.");
         }
 
         return $user;

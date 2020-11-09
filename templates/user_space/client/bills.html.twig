@@ -13,6 +13,7 @@
                     <th>Propriétaire</th>
                     <th>Date de location</th>
                     <th>Date de fin de location</th>
+                    <th>Etat</th>
                     <th>Montant en €</th>
                     <th>Photo</th>
                 </tr>
@@ -24,6 +25,13 @@
                         <td>{{ bill[2].name }}</td>
                         <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
                         <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
+                        <td>
+                            {% if bill[0].returned %}
+                                Non active
+                            {% else %}
+                                Active
+                            {% endif %}
+                        </td>
                         <td>{{ bill[0].price }} €</td>
                         <td><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
                     </tr>

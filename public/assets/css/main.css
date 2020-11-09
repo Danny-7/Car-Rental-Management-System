@@ -1,4 +1,8 @@
 /* home page style */
+* {
+    box-sizing: border-box;
+}
+
 .home {
     background-image: url("../images/luxury-car-background.jpg");
     background-repeat: no-repeat;

@@ -28,4 +28,9 @@ class UserService
     {
         return $this->userRepository->findOneBy(['id' => $id]);
     }
+
+    public function getUsers() :array
+    {
+        return $this->userRepository->findAll();
+    }
 }

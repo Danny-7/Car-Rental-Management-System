@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CarRepository::class)
@@ -20,6 +21,7 @@ class Car
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Entrez un type valide")
      */
     private $type;
 
@@ -30,6 +32,7 @@ class Car
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\GreaterThan(value = 0, message="Entrez un prix valide")
      */
     private $amount;
 
@@ -50,6 +53,7 @@ class Car
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThan(value=0, message="Entrez une quantité supérieure à 0")
      */
     private $quantity;
 
