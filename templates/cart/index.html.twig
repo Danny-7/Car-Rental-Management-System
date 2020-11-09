@@ -43,7 +43,10 @@
                     <a href="{{ path('bills.new') }}" class="btn btn-success">Confirmer la commande</a>
                 </div>
             {% else %}
+                <p></p>
                 <h1>Votre panier est vide !</h1>
+                <p></p>
+                <a href="{{ path('cars') }}" class="btn btn-primary">Retourner voir nos voitures</a>
             {% endif %}
         </div>
     </div>

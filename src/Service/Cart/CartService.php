@@ -2,13 +2,19 @@
 
 namespace App\Service\Cart;
 
+use App\Service\Bill\BillingService;
+use App\Service\Car\CarService;
 use App\Repository\CarRepository;
+use App\Repository\BillingRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Entity\Billing;
 
 class CartService {
 
     private $session;
     private $carRepository;
+    private $billRepository;
+    private $billingService;
     private $cartData;
 
     public function __construct(SessionInterface $session, CarRepository $carRepository)
@@ -23,11 +29,12 @@ class CartService {
         $cart = $this->session->get('cart', []);
         $startDate = $rentOptions['startDate'];
         $endDate = $rentOptions['endDate'];
+        $paid = $rentOptions['paid'];
         $nbDays = (int)date('t');
         if($endDate) {
             $nbDays = $startDate->diff($endDate)->days;
         }
-        $cart[$id] = [$id, $rentOptions, $quantity, $nbDays];
+        $cart[$id] = [$id, $rentOptions, $quantity, $nbDays, $paid];
 
         $this->session->set('cart', $cart);
     }
@@ -54,6 +61,14 @@ class CartService {
         }
 
         return $this->cartData;
+    }
+
+    public function getItemCart() : Billing
+    {
+        $cart = $this->session->get('cart', [0]);
+        $bill = $this->billRepository->find($cart[0]);
+
+        return $this->bill;
     }
 
     public function getTotalAmount() : float

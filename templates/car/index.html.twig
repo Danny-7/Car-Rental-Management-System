@@ -14,6 +14,17 @@
     
     
     <div class="container-fluid">
+    
+        <p></p>
+        <div class="d-flex">            
+            {% for message in app.flashes('notif') %}
+                <div class="alert alert-dismissible alert-success"  style="margin: 0 auto">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Bravo !</strong> Votre commande à correctement été ajouté à <a href="{{ path('cart') }} " class="alert-link">votre panier !</a>
+                </div>
+            {% endfor %}
+        </div>
+
         <div class="cars d-flex mx-auto justify-content-between flex-wrap" style="width: 80%">
             {% for car in cars %}
                 <div class="card" style="width: 350px; margin: 1em auto">
