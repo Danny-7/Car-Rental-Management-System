@@ -3,11 +3,18 @@
 namespace App\Controller;
 
 use App\Service\Cart\CartService;
+use App\Service\Bill\BillingService;
+use App\Service\Car\CarService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class CartController extends AbstractController
 {
+    private $carService;
+    private $cartService;
+    private $billingService;
+
     /**
      * @Route("/cart", name="cart")
      * @param CartService $cartService
@@ -23,6 +30,33 @@ class CartController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/cart/pay/{id}", name="cart.pay")
+     * @param $id
+     * @param CartService $cartService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function billPay($id, CartService $cartService)
+    {
+        $itemToPay = array();
+
+        $bill = $this->billingService->getBill($id);
+        $car = $this->carService->getCar($bill->getIdCar()->getId());
+
+        array_push($itemToPay, [$bill, $car]);
+
+        $nbDays = $bill->getStartDate()->diff(new \DateTime('now'))->days;
+
+        $totalItems = $cartService->getTotalAmount();
+
+        return $this->render('cart/cart.pay.html.twig', [
+            'item' => $itemToPay,
+            'totalItems' => $totalItems,
+            'nbDays' => $nbDays
+        ]);
+    }
+
     /**
      * @Route("/cart/remove/{id}", name="cart.remove")
      * @param $id
@@ -35,4 +69,5 @@ class CartController extends AbstractController
         $cartService->remove($id);
         return $this->redirectToRoute('cart');
     }
+
 }

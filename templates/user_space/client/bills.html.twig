@@ -5,6 +5,7 @@
 {% block dashboard %}
 
     <div class="container-fluid h-100">
+        <p></p>
         <div class="">
             <table class="table">
                 <thead>
@@ -15,6 +16,8 @@
                     <th>Date de fin de location</th>
                     <th>Etat</th>
                     <th>Montant en €</th>
+                    <th>État de la location</th>
+                    <th>État du paiement</th>
                     <th>Photo</th>
                 </tr>
                 </thead>
@@ -22,7 +25,7 @@
                 {% for bill in bills %}
                     <tr>
                         <td>{{ bill[1].type }}</td>
-                        <td>{{ bill[2].name }}</td>
+                        <td>{{ bill[1].idOwner.name }}</td>
                         <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
                         <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
                         <td>
@@ -32,7 +35,22 @@
                                 Active
                             {% endif %}
                         </td>
+                        <td>{{ bill[0].endDate | date('d-m-Y') }}
                         <td>{{ bill[0].price }} €</td>
+
+                        {% if bill[0].returned == true %}
+                            <td>Terminée</td>
+                        {% else %}
+                            <td>En cours</td>
+                        {% endif %}
+
+
+                        {% if bill[0].paid == true %}
+                            <td>Terminé</td>
+                        {% else %}
+                            <td>Non effectué</td>
+                        {% endif %}
+
                         <td><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
                     </tr>
                 {% endfor %}

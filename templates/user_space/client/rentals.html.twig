@@ -6,6 +6,17 @@
 {% block dashboard %}
 
     <div class="container-fluid h-100">
+        <p></p>
+        <div class="d-flex">            
+            {% for message in app.flashes('message') %}
+                <div class="alert alert-dismissible alert-success"  style="margin: 0 auto">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Le véhicule à été correctement rendu !
+                    Votre facture est disponible dans l'onglet "Mes Factures".
+                </div>
+            {% endfor %}
+        </div>
+
         <div>
             <table class="table">
                 <thead>
@@ -24,7 +35,12 @@
                         <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
                         <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
                         <td><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
-                        <td><a href="{{ path('user.space.car.return', {id : bill[0].id }) }}" class="btn btn-danger">Rendre le véhicule</a></td>
+
+                        {% if bill[0].paid == false %}
+                            <td><a href="{{ path('cart.pay', {id : bill[0].id }) }}" class="btn btn-success">Régler la commande</a></td>
+                        {% else %}
+                            <td><a href="{{ path('user.space.car.return', {id : bill[0].id }) }}" class="btn btn-danger">Rendre le véhicule</a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

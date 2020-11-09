@@ -38,6 +38,17 @@
 			</ul>
 		</nav>
 		<div style="flex: 1;">
+			<p></p>
+			<div class="d-flex">            
+				{% for message in app.flashes('message_paid') %}
+					<div class="alert alert-dismissible alert-success"  style="margin: 0 auto 10px">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						Votre commande a été correctement réglée !
+						Vous pouvez désormais rendre le véhicule dans l'onglet "Mes Locations".
+					</div>
+				{% endfor %}
+			</div>
+
 			{% block dashboard %}{% endblock %}
 		</div>
 	</div>

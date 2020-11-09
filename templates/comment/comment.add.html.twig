@@ -1,0 +1,24 @@
+{%  extends 'base.html.twig' %}
+
+{% block title %}
+	Ajouter un avis
+{% endblock %}
+
+{% block content %}
+
+    <div class="container"> 
+        <p></p>
+        <h1>Ajouter un avis</h1>
+        <p class="lead">Nous serions ravis de connaître votre opinion sur votre location !</p>
+        <form method="POST" class="form">
+            {{ form_start(commentForm) }}
+            {{ form_row(commentForm.content, { 'label' : 'Votre avis' }) }}
+            <button type="submit" class="btn btn-success">Valider</button>
+            <button type="submit" class="btn btn-primary">Continuer sans laisser d'avis</button>
+
+            {{ form_end(commentForm) }}
+        </form>
+        <p></p>
+    </div>
+
+{% endblock %}

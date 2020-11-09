@@ -27,8 +27,9 @@ class UserSpaceController extends AbstractController
      */
     public function index()
     {
-        return $this->render("user_space/index.html.twig");
+        return $this->render("user_space/dashboard.html.twig");
     }
+
 
     /**
      * Show actually cars rented ( not returned )
@@ -40,13 +41,14 @@ class UserSpaceController extends AbstractController
     {
         $bills = $this->billingService->showBillsOfUserNotReturned($id);
         $billsFormatted = array();
-        foreach ($bills as $bill){
+        foreach ($bills as $bill) {
             $car = $this->carService->getCar($bill->getIdCar()->getId());
             array_push($billsFormatted, [$bill, $car]);
         }
 
         return $this->render('user_space/client/rentals.html.twig', [
-            'bills' => $billsFormatted
+            'bills' => $billsFormatted,
+            'id' => $this->getUser()->getId()
         ]);
     }
 
@@ -59,7 +61,7 @@ class UserSpaceController extends AbstractController
     {
         $bills = $this->billingService->showBillsOfUser($id);
         $billsFormatted = array();
-        foreach ($bills as $bill){
+        foreach ($bills as $bill) {
             $car = $this->carService->getCar($bill->getIdCar()->getId());
             $renter = $this->userService->getUser($bill->getIdUser()->getId());
             array_push($billsFormatted, [$bill, $car, $renter]);
@@ -70,14 +72,14 @@ class UserSpaceController extends AbstractController
         ]);
     }
 
-    private function arrangeBills(array $bills) :array
+    private function arrangeBills(array $bills): array
     {
         $filteredBills = array();
-        foreach ($bills as $bill){
+        foreach ($bills as $bill) {
             $car = $this->carService->getCar($bill->getIdCar()->getId());
             $owner = $this->userService->getUser($car->getIdOwner()->getId());
-            $renter =  $this->userService->getUser($bill->getIdUser()->getId());
-            if($owner->getId() === $this->getUser()->getId()){
+            $renter = $this->userService->getUser($bill->getIdUser()->getId());
+            if ($owner->getId() === $this->getUser()->getId()) {
                 array_push($filteredBills, [$bill, $car, $renter]);
             }
         }
@@ -88,7 +90,8 @@ class UserSpaceController extends AbstractController
     /**
      * @Route("/user/space/car/return/{id}", name="user.space.car.return")
      */
-    public function returnCar(int $id) {
+    public function returnCar(int $id)
+    {
 
         $bill = $this->billingService->getBill($id);
 
@@ -97,11 +100,17 @@ class UserSpaceController extends AbstractController
         $this->billingService->returnCarBill($id);
 
         $this->addFlash('message', "Le véhicule à bien été rendu");
-        return $this->redirectToRoute("user.space.client.rentals", [
-            'id' => $this->getUser()->getId()
+        return $this->redirectToRoute("comment.add", [
+            'id' => $bill->getId()
         ]);
     }
 
+    /**
+     * @Route("/user/space/car/pay/{id}, name="user.space.car.pay")
+     * @param int $id
+     */
+    /*public function payCar(int $id) {
 
-
+    }*/
 }
+

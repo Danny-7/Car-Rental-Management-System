@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Régler une commande {% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="container-fluid w-75">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Location en jours</th>
+                        <th>Montant du véhicule / J</th>
+                        <th>Montant de la location</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ item[1].type }}</td>
+                        <td>{{ nbDays }}</td>
+                        <td>{{ item[1].amount }} €</td>
+                        <td>{{ item[1].amount*nbDays }} €</td>
+                        <td><img src="{{ asset('uploads/cars/') }}{{ item.image }}" alt="{{ item.type }}" style="height: 50px; object-fit: cover"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">Total</td>
+                        <td>{{ totalItems }} €</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row float-right">
+                <a href="{{ path('bills.update' }}" class="btn btn-success">Régler la commande</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

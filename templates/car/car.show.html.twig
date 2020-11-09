@@ -3,7 +3,9 @@
 {% block title %} {{ car.type }} - RentCar {% endblock %}
 
 {% block content %}
+
     <div class="container">
+    
         <div class="row">
             <div class="{{ is_granted('IS_AUTHENTICATED_FULLY') ? 'col-8' : 'col-12' }}">
                 <div class="card" style="width: 700px; margin: 1em auto">
@@ -27,6 +29,23 @@
                     {% block formRent %}{% endblock %}
                 </div>
             {% endif %}
+        </div>
+
+        <div class = "container">
+            <p></p>
+            <h1>Avis</h1>
+
+            {% if car.comments.count == 0 %}
+                <p>Aucun avis</p>
+            {% else %}
+                {% for comment in car.comments %}
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{comment.content}}</p>
+                        <footer class="blockquote-footer">{{comment.author}}, le <cite title="Source Title">{{ comment.createdAt | date('d/m/Y') }}</cite></footer>
+                    </blockquote>
+                {% endfor %}
+            {% endif %}
+
         </div>
 
     </div>

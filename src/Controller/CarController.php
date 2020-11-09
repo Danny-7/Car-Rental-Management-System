@@ -4,10 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Billing;
 use App\Entity\Car;
+use App\Entity\Comment;
+use App\Repository\CommentRepository;
 use App\Form\NewCarType;
 use App\Form\RentCarType;
+use App\Form\CommentType;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
+use App\Service\Bill\BillingService;
+use App\Service\User\UserService;
+use App\Service\Comment\CommentService;
 use App\Service\FileUpload\FileUploader;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Form;
@@ -20,10 +26,16 @@ use function Sodium\add;
 class CarController extends AbstractController
 {
     private $carService;
+    private $commentService;
+    private $billingService;
+    private $userService;
 
-    public function __construct(CarService $carService)
+    public function __construct(CarService $carService, BillingService $billingService, UserService $userService, CommentService $commentService)
     {
         $this->carService = $carService;
+        $this->billingService = $billingService;
+        $this->userService = $userService;
+        $this->commentService = $commentService;
     }
 
 
@@ -114,12 +126,28 @@ class CarController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $data= $form->getData();
-            $rentOptions = [
-                'startDate' => $data->getStartDate(),
-                'endDate' => $data->getEndDate(),
-                'quantity' => (int)$form->get('quantity')->getData()
-            ];
+
+            if($data->getStartDate() == $data->getEndDate() || $data->getEndDate() == NULL){
+                $rentOptions = [
+                    'startDate' => $data->getStartDate(),
+                    'endDate' => $data->getEndDate(),
+                    'quantity' => (int)$form->get('quantity')->getData(),
+                    'paid' => false
+                ];
+            }
+            else{
+                $rentOptions = [
+                    'startDate' => $data->getStartDate(),
+                    'endDate' => $data->getEndDate(),
+                    'quantity' => (int)$form->get('quantity')->getData(),
+                    'paid' => true
+                ];
+            }
+
             $cartService->add($id, $rentOptions, $rentOptions['quantity']);
+
+            $this->addFlash('notif', "Votre commande à été ajoutée au panier.");
+
             return $this->redirectToRoute('cars');
         }
 

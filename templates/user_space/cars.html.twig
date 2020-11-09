@@ -6,7 +6,13 @@
 
 {% block dashboard %}
 	<div class="container-fluid h-100">
-		<div class="d-flex flex-column h-100 justify-content-center align-items-center">
+		<div class="d-flex flex-column justify-content-center align-items-center">
+
+			{% if cars | length == 0 %}
+				<p></p>
+				<p></p>
+				<p class="lead">Aucune voiture pour le moment.</p>
+			{% else %}
 			<table class="table w-75">
 				<thead>
 					<tr>
@@ -58,6 +64,8 @@
 					{% endfor %}
 				</tbody>
 			</table>
+
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}

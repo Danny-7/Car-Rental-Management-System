@@ -8,6 +8,7 @@ use App\Entity\Billing;
 use App\Entity\User;
 use App\Repository\BillingRepository;
 use App\Service\Car\CarService;
+use App\Service\Cart\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -48,7 +49,7 @@ class BillingService
                 $car->getAmount())
             ->setStartDate($rentOptions['startDate'])
             ->setEndDate($rentOptions['endDate'])
-            ->setPaid(true)
+            ->setPaid($rentOptions['paid'])
             ->setReturned(false);
         $this->entityManager->persist($bill);
     }
@@ -111,4 +112,11 @@ class BillingService
     }
 
 
+    public function payBill(CartService $cartService)
+    {
+        $bill = $cartService->getItemCart();
+
+        $bill->setPaid(true);
+        $this->entityManager->flush();
+    }
 }

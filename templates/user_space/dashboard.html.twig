@@ -1,0 +1,23 @@
+{% extends 'user_space/index.html.twig' %}
+
+{% block title %}
+	Mon espace
+{% endblock %}
+
+{% block dashboard %}
+    <div class="container">
+        <p></p>
+		<h1>Bienvenue dans votre espace !</h1>
+		<p></p>
+		<p>Vous avez accès aux services suivants :</p>
+		{% if app.user.role == 'Entreprise' %}
+			<a class="btn btn-primary" href="{{ path('user.space.client.rentals', { id : app.user.id}) }}">Mes locations</a>
+			<a class="btn btn-primary" href="{{ path('user.space.client.bills', { id : app.user.id}) }}">Mes factures</a>
+		{% elseif app.user.role == 'Loueur' %}
+			<a class="btn btn-primary" href="{{ path('user.space.cars', { id : app.user.id}) }}">Mes voitures</a>
+			<a class="btn btn-primary" href="{{ path('car.new') }}">Ajouter un véhicule</a>
+			<a class="btn btn-primary" href="{{ path('user.space.renter.cars.rented') }}">Bilan des locations</a>
+		{% endif %}
+    </div>
+
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Car;
 use App\Service\Bill\BillingService;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CarService
 {  
@@ -59,5 +60,6 @@ class CarService
         $carToUpdate = $this->getCar($id);
         $carToUpdate->setQuantity($carToUpdate->getQuantity() - $quantity);
     }
+
 
 }
