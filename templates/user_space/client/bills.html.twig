@@ -27,17 +27,9 @@
                         <td>{{ bill[1].idOwner.name }}</td>
                         <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
                         <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
-                        <td>
-                            {% if bill[0].returned %}
-                                Non active
-                            {% else %}
-                                Active
-                            {% endif %}
-                        </td>
-                        <td>{{ bill[0].endDate | date('d-m-Y') }}
                         <td>{{ bill[0].price }} €</td>
 
-                        {% if bill[0].returned == true %}
+                        {% if bill[0].returned %}
                             <td>Terminée</td>
                         {% else %}
                             <td>En cours</td>
