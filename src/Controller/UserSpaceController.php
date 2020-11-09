@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Service\Bill\BillingService;
 use App\Service\Car\CarService;
 use App\Service\User\UserService;
+use App\Service\Bill\BillingService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -27,6 +27,16 @@ class UserSpaceController extends AbstractController
      */
     public function index()
     {
+        // nb rented cars on the card (done)
+            // - nb rented cars returned (done)
+            // - nb rentals available (done)
+        $nbRentedCars = $this->billingService->getCountOfRentedCars($this->getUser()->getId());
+        $nbReturnedCars = $this->billingService->getCountOfReturnedCars($this->getUser()->getId());
+        $nbAvailableCars = $this->billingService->getCountOfAvailableCars($this->getUser()->getId());
+
+        dump($nbRentedCars, $nbReturnedCars, $nbAvailableCars);
+        // amount of rented cars in one month
+        // nb unpaid rentals
         return $this->render("user_space/dashboard.html.twig");
     }
 
@@ -66,7 +76,6 @@ class UserSpaceController extends AbstractController
             $renter = $this->userService->getUser($bill->getIdUser()->getId());
             array_push($billsFormatted, [$bill, $car, $renter]);
         }
-
         return $this->render('user_space/client/bills.html.twig', [
             'bills' => $billsFormatted
         ]);
@@ -105,12 +114,5 @@ class UserSpaceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/user/space/car/pay/{id}, name="user.space.car.pay")
-     * @param int $id
-     */
-    /*public function payCar(int $id) {
-
-    }*/
 }
 

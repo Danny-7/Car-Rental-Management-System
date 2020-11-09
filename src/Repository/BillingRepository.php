@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Billing;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Billing|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +19,26 @@ class BillingRepository extends ServiceEntityRepository
         parent::__construct($registry, Billing::class);
     }
 
-    // /**
-    //  * @return Billing[] Returns an array of Billing objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getCountOfRentedCarsByUser(int $idUser) :int
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('count(b)')
+            ->andWhere('b.idUser = :id')
+            ->setParameter('id', $idUser)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Billing
+    public function getCountCarsByUserWithOption(int $idUser, bool $isReturned) :int
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('count(b)')
+            ->andWhere('b.idUser = :id')
+            ->andWhere('b.returned = :val')
+            ->setParameter('id', $idUser)
+            ->setParameter('val', $isReturned)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
+
 }

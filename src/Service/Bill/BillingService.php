@@ -4,11 +4,11 @@
 namespace App\Service\Bill;
 
 use App\Entity\Car;
-use App\Entity\Billing;
 use App\Entity\User;
-use App\Repository\BillingRepository;
+use App\Entity\Billing;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
+use App\Repository\BillingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,24 +33,52 @@ class BillingService
         $this->carService = $carService;
     }
 
+    public function getCountOfRentedCars($idUser) :int
+    {
+        return $this->repository->getCountOfRentedCarsByUser($idUser);
+    }
+
+    public function getCountOfReturnedCars($idUser) :int
+    {
+        return $this->repository->getCountCarsByUserWithOption($idUser, true);
+    }
+
+    public function getCountOfAvailableCars($idUser) :int
+    {
+        return $this->repository->getCountCarsByUserWithOption($idUser, false);
+    }
+
     public function createBill( UserInterface $user, Car $car, array $rentOptions)
     {
         $hasReduce = false;
+        $hasEndDate = false;
         $bills = $this->showBillsOfUser($user->getId());
         $nbRent = count($bills);
 
         if($nbRent > self::NB_VIP_CAR){
             $hasReduce = true;
         }
+
+        $nbDays = (int)date('t');
+
+        if($rentOptions['endDate']){
+            $hasEndDate = true;
+            $nbDays = $rentOptions['startDate']->diff($rentOptions['endDate'])->days;
+        }
+        
+
         $bill = new Billing();
         $bill->setIdCar($car)
             ->setIdUser($user)
             ->setPrice($hasReduce ? ($car->getAmount())*(1-self::REDUCE_PCT) :
                 $car->getAmount())
-            ->setStartDate($rentOptions['startDate'])
-            ->setEndDate($rentOptions['endDate'])
-            ->setPaid($rentOptions['paid'])
-            ->setReturned(false);
+            ->setStartDate($rentOptions['startDate']);
+            if($hasEndDate){
+                $bill->setEndDate($rentOptions['endDate']);
+            }
+            $bill->setPaid($rentOptions['paid'])
+                ->setReturned(false);
+
         $this->entityManager->persist($bill);
     }
 
@@ -112,10 +140,8 @@ class BillingService
     }
 
 
-    public function payBill(CartService $cartService)
+    public function payBill(Billing $bill)
     {
-        $bill = $cartService->getItemCart();
-
         $bill->setPaid(true);
         $this->entityManager->flush();
     }

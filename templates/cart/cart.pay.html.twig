@@ -17,20 +17,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ item[1].type }}</td>
+                        <td>{{ car.type }}</td>
                         <td>{{ nbDays }}</td>
-                        <td>{{ item[1].amount }} €</td>
-                        <td>{{ item[1].amount*nbDays }} €</td>
-                        <td><img src="{{ asset('uploads/cars/') }}{{ item.image }}" alt="{{ item.type }}" style="height: 50px; object-fit: cover"></td>
+                        <td>{{ car.amount }} €</td>
+                        <td>{{ car.amount*nbDays }} €</td>
+                        <td><img src="{{ asset('uploads/cars/') }}{{ car.image }}" alt="{{ car.type }}" style="height: 50px; object-fit: cover"></td>
                     </tr>
                     <tr>
                         <td colspan="6">Total</td>
-                        <td>{{ totalItems }} €</td>
+                        <td>{{ car.amount*nbDays }} €</td>
                     </tr>
                 </tbody>
             </table>
             <div class="row float-right">
-                <a href="{{ path('bills.update' }}" class="btn btn-success">Régler la commande</a>
+                <a href="{{ path('bills.update', { id:bill.id }) }}" class="btn btn-success">Régler la commande</a>
             </div>
         </div>
     </div>

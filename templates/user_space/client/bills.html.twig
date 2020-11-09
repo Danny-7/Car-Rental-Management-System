@@ -26,7 +26,11 @@
                         <td>{{ bill[1].type }}</td>
                         <td>{{ bill[1].idOwner.name }}</td>
                         <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
-                        <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
+                        {% if bill[0].endDate != null %}
+                            <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
                         <td>{{ bill[0].price }} €</td>
 
                         {% if bill[0].returned %}

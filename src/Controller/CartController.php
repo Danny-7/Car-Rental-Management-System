@@ -32,32 +32,6 @@ class CartController extends AbstractController
 
 
     /**
-     * @Route("/cart/pay/{id}", name="cart.pay")
-     * @param $id
-     * @param CartService $cartService
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function billPay($id, CartService $cartService)
-    {
-        $itemToPay = array();
-
-        $bill = $this->billingService->getBill($id);
-        $car = $this->carService->getCar($bill->getIdCar()->getId());
-
-        array_push($itemToPay, [$bill, $car]);
-
-        $nbDays = $bill->getStartDate()->diff(new \DateTime('now'))->days;
-
-        $totalItems = $cartService->getTotalAmount();
-
-        return $this->render('cart/cart.pay.html.twig', [
-            'item' => $itemToPay,
-            'totalItems' => $totalItems,
-            'nbDays' => $nbDays
-        ]);
-    }
-
-    /**
      * @Route("/cart/remove/{id}", name="cart.remove")
      * @param $id
      * @param CartService $cartService
