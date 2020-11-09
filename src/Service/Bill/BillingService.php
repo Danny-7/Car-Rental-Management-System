@@ -5,6 +5,7 @@ namespace App\Service\Bill;
 
 use App\Entity\Car;
 use App\Entity\Billing;
+use App\Entity\User;
 use App\Repository\BillingRepository;
 use App\Service\Car\CarService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -103,5 +104,11 @@ class BillingService
             'returned' => false           
             ]);
     }
+
+    public function showBillsOfCustomer(User $customer) :array
+    {
+        return $this->showBillsOfUser($customer->getId());
+    }
+
 
 }

@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Form\NewCarType;
 use App\Service\Bill\BillingService;
 use App\Service\Car\CarService;
-use App\Service\FileUpload\FileUploader;
 use App\Service\User\UserService;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -25,23 +22,12 @@ class UserSpaceController extends AbstractController
     }
 
     /**
+     * Dashboard of the user
      * @Route("/user/space", name="user.space")
      */
     public function index()
     {
         return $this->render("user_space/index.html.twig");
-    }
-
-    /**
-     * @Route("/user/space/cars/{id}", name="user.space.cars")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showCars(int $id)
-    {
-        $cars = $this->carService->getAllCarsByOwnerId($id);
-        return $this->render("user_space/cars.html.twig", [
-            'cars' => $cars
-        ]);
     }
 
     /**
@@ -65,7 +51,7 @@ class UserSpaceController extends AbstractController
     }
 
     /**
-     * Show all bills of the user
+     * Show all bills of the client
      * @Route("/user/space/client/bills-{id}", name="user.space.client.bills")
      * @param int $id
      */
@@ -84,13 +70,8 @@ class UserSpaceController extends AbstractController
         ]);
     }
 
-    /**
-     * Show the rented cars of a renter
-     * @Route("/user/space/renter/rented/cars", name="user.space.renter.cars.rented")
-     */
-    public function showRentedCars()
+    private function arrangeBills(array $bills) :array
     {
-        $bills = $this->billingService->showBills();
         $filteredBills = array();
         foreach ($bills as $bill){
             $car = $this->carService->getCar($bill->getIdCar()->getId());
@@ -100,21 +81,9 @@ class UserSpaceController extends AbstractController
                 array_push($filteredBills, [$bill, $car, $renter]);
             }
         }
-
-        return $this->render('user_space/rentedCars.html.twig', [
-            'bills' => $filteredBills
-        ]);
+        return $filteredBills;
     }
 
-
-    /**
-     * @Route("/user/space/car/delete/{id}", name="user.space.car.delete")
-     */
-    public function removeCar(int $id) {
-        $this->carService->remove($id);
-        $this->addFlash('message', "Votre véhicule a bien été supprimé");
-        return $this->redirectToRoute("user.space.cars");
-    }
 
     /**
      * @Route("/user/space/car/return/{id}", name="user.space.car.return")
@@ -133,50 +102,6 @@ class UserSpaceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/user/space/car/edit/{id}", name="user.space.car.edit")
-     * @param Request $request
-     * @param FileUploader $fileUploader
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function editCar(Request $request, FileUploader $fileUploader, int $id) {
-        $car = $this->carService->getCar($id);
 
-        $form = $this->createForm(NewCarType::class, $car);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-            $carFile = $form->get('attachment')->getData();
-
-            $datasheet = array();
-
-            $datasheet['category'] = $form->get('category')->getData();
-            $datasheet['fuel'] = $form->get('fuel')->getData();
-            $datasheet['engine'] = $form->get('engine')->getData();
-            $datasheet['shift'] = $form->get('shift')->getData();
-            $datasheet['nb_portes'] = $form->get('nb_portes')->getData();
-
-            $car->setDataSheet($datasheet);
-
-             if ($carFile) {
-                 $carFileName = $fileUploader->upload($carFile);
-                 $car->setImage($carFileName);
-             }
-            $car->setRent("disponible");
-            $car->setIdOwner($this->getUser());
-
-            $this->carService->add($car);
-            $this->addFlash('message',"Votre véhicule à bien été modifié");
-            
-            return $this->redirectToRoute('user.space.cars');
-
-        }
-        
-        return $this->render("car/car.new.html.twig", [
-            'form' => $form->createView()
-        ]);
-    }
 
 }
