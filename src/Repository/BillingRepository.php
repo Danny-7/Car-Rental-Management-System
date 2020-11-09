@@ -19,26 +19,4 @@ class BillingRepository extends ServiceEntityRepository
         parent::__construct($registry, Billing::class);
     }
 
-    public function getCountOfRentedCarsByUser(int $idUser) :int
-    {
-        return $this->createQueryBuilder('b')
-            ->select('count(b)')
-            ->andWhere('b.idUser = :id')
-            ->setParameter('id', $idUser)
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    public function getCountCarsByUserWithOption(int $idUser, bool $isReturned) :int
-    {
-        return $this->createQueryBuilder('b')
-            ->select('count(b)')
-            ->andWhere('b.idUser = :id')
-            ->andWhere('b.returned = :val')
-            ->setParameter('id', $idUser)
-            ->setParameter('val', $isReturned)
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
 }

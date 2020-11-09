@@ -30,14 +30,14 @@ class UserSpaceController extends AbstractController
         // nb rented cars on the card (done)
             // - nb rented cars returned (done)
             // - nb rentals available (done)
-        $nbRentedCars = $this->billingService->getCountOfRentedCars($this->getUser()->getId());
-        $nbReturnedCars = $this->billingService->getCountOfReturnedCars($this->getUser()->getId());
-        $nbAvailableCars = $this->billingService->getCountOfAvailableCars($this->getUser()->getId());
-
-        dump($nbRentedCars, $nbReturnedCars, $nbAvailableCars);
+        //        dump($nbRentedCars, $nbReturnedCars, $nbAvailableCars, $totalAmountPaid);
         // amount of rented cars in one month
         // nb unpaid rentals
-        return $this->render("user_space/dashboard.html.twig");
+        $infos = $this->billingService->getDashboardInfo($this->getUser()->getId());
+
+        return $this->render("user_space/dashboard.html.twig", [
+            'infos' => $infos
+        ]);
     }
 
 

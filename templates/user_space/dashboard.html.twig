@@ -19,7 +19,89 @@
 			<a class="btn btn-primary" href="{{ path('user.space.renter.cars.rented') }}">Bilan des locations</a>
 		{% endif %}
 
-
+	<div class="mt-4">
+		<div class="row my-4">
+			<div class="col-4">
+				<div class="card bg-primary" style="max-width: 18rem;">
+					<div class="card-body text-center">
+						<div class="row">
+							<i class="fas fa-car icon text-center text-white my-4 display-4 mx-auto"></i>
+						</div>
+						<div class="mx-auto">
+							<h6 class="text-white ">Nombre de voiture louées</h6>
+							<h2 class="text-white text-bold">{{ infos[0] }}</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="card bg-primary" style="max-width: 18rem;">
+					<div class="card-body text-center">
+						<div class="row">
+							<i class="fas fa-undo icon text-center text-white my-4 display-4 mx-auto"></i>
+						</div>
+						<div class="mx-auto">
+							<h6 class="text-white ">Nombre de voiture retournées</h6>
+							<h2 class="text-white text-bold">{{ infos[1] }}</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="card bg-primary" style="max-width: 18rem;">
+					<div class="card-body text-center">
+						<div class="row">
+							<i class="fas fa-car icon text-center text-white my-4 display-4 mx-auto"></i>
+						</div>
+						<div class="mx-auto">
+							<h6 class="text-white ">Nombre de voiture disponibles</h6>
+							<h2 class="text-white text-bold">{{ infos[2] }}</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row my-4">
+			<div class="col-sm-6 col-lg-4">
+				<div class="card bg-primary" style="max-width: 18rem;">
+					<div class="card-body text-center">
+						<div class="row">
+							<i class="fas fa-euro-sign icon text-center text-white my-4 display-4 mx-auto"></i>
+						</div>
+						<div class="mx-auto">
+							<h6 class="text-white ">Montant des locations</h6>
+							<h2 class="text-white text-bold">{{ infos[3] }}€</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-lg-4">
+				<div class="card bg-primary" style="max-width: 18rem;">
+					<div class="card-body text-center">
+						<div class="row">
+							<i class="fas fa-euro-sign icon text-center my-4 display-4 mx-auto" style="color:red"></i>
+						</div>
+						<div class="mx-auto">
+							<h6 class="text-white ">Nombre de locations non payée</h6>
+							<h2 class="text-white text-bold">{{ infos[4] }}</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6 col-lg-4">
+				<div class="card bg-primary" style="max-width: 18rem;">
+					<div class="card-body text-center">
+						<div class="row">
+							<i class="fas fa-calendar-alt icon text-center text-white my-4 display-4 mx-auto"></i>
+						</div>
+						<div class="mx-auto">
+							<h6 class="text-white ">Montant des locations de ce mois</h6>
+							<h2 class="text-white text-bold">{{ infos[5] }}€</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 
 {% endblock %}

@@ -48,6 +48,37 @@ class BillingService
         return $this->repository->getCountCarsByUserWithOption($idUser, false);
     }
 
+    public function getTotalAmountPaid(int $idUser) :int
+    {
+        return $this->repository->getAmountOfRentalsPaid($idUser);
+    }
+
+    public function getDashboardInfo(int $idUser) : array
+    {
+        $bills = $this->repository->findBy(['idUser' => $idUser]);
+        $nbRentedCars = $nbReturnedCars = $nbAvailableCars = $totalAmountPaid = $nbUnpaid = $amountCurrMonthRentals = 0;
+
+        foreach ($bills as $bill){
+            ++$nbRentedCars;
+            if($bill->getPaid()){
+                $totalAmountPaid += $bill->getPrice();
+            }
+            else {
+                ++$nbUnpaid;
+            }
+            if($bill->getReturned()){
+                ++$nbReturnedCars;
+            }
+            else{
+                ++$nbAvailableCars;
+            }
+            if(date('m',strtotime($bill->getStartDate()->format('Y/m/d'))) == date('m')){
+                $amountCurrMonthRentals += $bill->getPrice();
+            }
+        }
+        return array($nbRentedCars, $nbReturnedCars, $nbAvailableCars, $totalAmountPaid, $nbUnpaid, $amountCurrMonthRentals);
+    }
+
     public function createBill( UserInterface $user, Car $car, array $rentOptions)
     {
         $hasReduce = false;
@@ -70,8 +101,8 @@ class BillingService
         $bill = new Billing();
         $bill->setIdCar($car)
             ->setIdUser($user)
-            ->setPrice($hasReduce ? ($car->getAmount())*(1-self::REDUCE_PCT) :
-                $car->getAmount())
+            ->setPrice($hasReduce ? ($car->getAmount()*$nbDays*(1-self::REDUCE_PCT)) :
+                $car->getAmount()*$nbDays)
             ->setStartDate($rentOptions['startDate']);
             if($hasEndDate){
                 $bill->setEndDate($rentOptions['endDate']);
