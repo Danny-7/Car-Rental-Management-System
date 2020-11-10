@@ -24,7 +24,7 @@ security:
                 authenticators:
                     - App\Security\UserAuthenticator
             logout:
-                path: app.logout
+                path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -34,8 +34,12 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_RENTER
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    #     - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/cart, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/user-space, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^user-space/renter, roles: ROLE_RENTER }

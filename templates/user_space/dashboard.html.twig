@@ -11,12 +11,12 @@
 		<p></p>
 		<p>Vous avez accès aux services suivants :</p>
 		{% if app.user.role == 'Entreprise' %}
-			<a class="btn btn-primary" href="{{ path('user.space.client.rentals', { id : app.user.id}) }}">Mes locations</a>
-			<a class="btn btn-primary" href="{{ path('user.space.client.bills', { id : app.user.id}) }}">Mes factures</a>
+			<a class="btn btn-primary" href="{{ path('user_space_client_rentals', { id : app.user.id}) }}">Mes locations</a>
+			<a class="btn btn-primary" href="{{ path('user_space_client_bills', { id : app.user.id}) }}">Mes factures</a>
 		{% elseif app.user.role == 'Loueur' %}
-			<a class="btn btn-primary" href="{{ path('user.space.cars', { id : app.user.id}) }}">Mes voitures</a>
-			<a class="btn btn-primary" href="{{ path('car.new') }}">Ajouter un véhicule</a>
-			<a class="btn btn-primary" href="{{ path('user.space.renter.cars.rented') }}">Bilan des locations</a>
+			<a class="btn btn-primary" href="{{ path('user_space_renter_cars', { id : app.user.id}) }}">Mes voitures</a>
+			<a class="btn btn-primary" href="{{ path('car_new') }}">Ajouter un véhicule</a>
+			<a class="btn btn-primary" href="{{ path('user_space_renter_cars_rented') }}">Bilan des locations</a>
 		{% endif %}
 
 	<div class="mt-4">

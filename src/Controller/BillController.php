@@ -5,57 +5,68 @@ namespace App\Controller;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
 use App\Service\Bill\BillingService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class BillController
+ * @package App\Controller
+ * @Route("/bill", name="bill_")
+ */
 class BillController extends AbstractController
 {
-    /**
-     * @Route("/bill", name="bill")
-     */
-    public function index()
-    {
-        return $this->render('bill/index.html.twig');
-    }
+    private CartService $cartService;
+    private BillingService $billingService;
+    private CarService $carService;
 
     /**
-     * @Route("/bill/new", name="bills.new")
+     * BillController constructor.
      * @param CartService $cartService
      * @param BillingService $billingService
      * @param CarService $carService
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createBill(CartService $cartService, BillingService $billingService, CarService $carService)
+    public function __construct(CartService $cartService, BillingService $billingService, CarService $carService)
     {
-        $order = $cartService->getFullCart();
+        $this->cartService = $cartService;
+        $this->billingService = $billingService;
+        $this->carService = $carService;
+    }
+
+    /**
+     * @Route("/new", name="new")
+     * @return Response
+     */
+    public function createBill()
+    {
+        $order = $this->cartService->getFullCart();
         foreach ($order as $item){
             $rentOptions = $item['rentOptions'];
             $quantity = $item['quantity'];
             $car = $item['item'];
             for($i = 0; $i < $quantity; $i++){
-                $billingService->createBill($this->getUser(), $car, $rentOptions);
+                $this->billingService->createBill($this->getUser(), $car, $rentOptions);
             }
-            $carService->UpdateCarQuantity($car->getId(), $quantity);
+            $this->carService->UpdateCarQuantity($car->getId(), $quantity);
         }
-        $billingService->flushBill();
-        $cartService->clear();
+        $this->billingService->flushBill();
+        $this->cartService->clear();
 
         return $this->redirectToRoute('cars');
     }
 
 
     /**
-     * @Route("/cart/pay/{id}", name="cart.pay")
+     * @Route("/pay", name="pay")
      * @param $id
-     * @param BillingService $billingService
-     * @param CarService $carService
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response
      */
-    public function billPay(int $id,  BillingService $billingService, CarService $carService)
+    public function billPay(int $id)
     {
 
-        $bill = $billingService->getBill($id);
-        $car = $carService->getCar($bill->getIdCar()->getId());
+        $bill = $this->billingService->getBill($id);
+        $car = $this->carService->getCar($bill->getIdCar()->getId());
 
         $nbDays = $bill->getStartDate()->diff(new \DateTime('now'))->days;
         if($nbDays == 0){
@@ -71,18 +82,17 @@ class BillController extends AbstractController
 
 
     /**
-     * @Route("/cart/bill/update/{id}", name="bills.update")
+     * @Route("/update/{id}", name="update")
      * @param $id
-     * @param BillingService $billingService
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
-    public function updateBill (int $id, BillingService $billingService)
+    public function updateBill (int $id)
     {
-        $bill = $billingService->getBill($id);
+        $bill = $this->billingService->getBill($id);
 
-        $billingService->payBill($bill);
+        $this->billingService->payBill($bill);
         
-        return $this->redirectToRoute('user.space.client.rentals', [
+        return $this->redirectToRoute('user_space_client_rentals', [
             'id' => $bill->getIdUser()->getId()
         ]);
 

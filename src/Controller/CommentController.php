@@ -2,29 +2,34 @@
 
 namespace App\Controller;
 
-use App\Entity\Car;
 use App\Entity\Comment;
 use App\Service\Car\CarService;
 use App\Service\User\UserService;
 use App\Service\Bill\BillingService;
 use App\Service\Comment\CommentService;
-use Symfony\Component\Form\Form;
 use App\Form\CommentType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class CommentController
+ * @package App\Controller
+ * Route("/comment", name="comment_")
+ */
 class CommentController extends AbstractController
 {
 
-    private $carService;
-    private $commentService;
-    private $billingService;
-    private $userService;
+    private CarService $carService;
+    private CommentService $commentService;
+    private BillingService $billingService;
+    private UserService $userService;
 
-    public function __construct(CarService $carService, BillingService $billingService, UserService $userService, CommentService $commentService)
+    public function __construct(CarService $carService,
+                                BillingService $billingService,
+                                UserService $userService,
+                                CommentService $commentService)
     {
         $this->carService = $carService;
         $this->billingService = $billingService;
@@ -33,25 +38,12 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/comment", name="comment")
-     */
-    public function index(): Response
-    {
-        return $this->render('comment/index.html.twig', [
-            'controller_name' => 'CommentController',
-        ]);
-    }
-
-
-    /**
-     * @Route("/comment/add-{id}", name="comment.add")
+     * @Route("/add-{id}", name="add")
      * @param $id
      * @param Request $request
-     * @param CommentService $commentService
-     * @param BillingService $billingService
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function addComment (int $id, Request $request,CommentService $commentService) {        
+    public function addComment (int $id, Request $request) :Response {
 
         $comment = new Comment();
         $bill = $this->billingService->getBill($id);
@@ -68,14 +60,14 @@ class CommentController extends AbstractController
             $content = $commentForm->get('content')->getData();
 
             if($content == null) {
-                return $this->redirectToRoute("user.space.client.rentals",[
+                return $this->redirectToRoute("user_space_client_rentals",[
                     'id' => $user->getId()
                 ]);
             }
 
-            $commentService->addComment($user, $car, $content);
+            $this->commentService->addComment($user, $car, $content);
 
-            return $this->redirectToRoute("user.space.client.rentals",[
+            return $this->redirectToRoute("user_space_client_rentals",[
                 'id' => $user->getId()
             ]);
         }

@@ -27,7 +27,7 @@
                                 <td>{{ item.item.amount }} €</td>
                                 <td>{{ item.item.amount*item.quantity*item.nbDays }} €</td>
                                 <td><img src="{{ asset('uploads/cars/') }}{{ item.item.image }}" alt="{{ item.item.type }}" style="height: 50px; object-fit: cover"></td>
-                                <td><a href="{{ path('cart.remove', { 'id': item.item.id }) }}" class="btn btn-danger btn-sm">
+                                <td><a href="{{ path('cart_remove', { 'id': item.item.id }) }}" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </a></td>
 
@@ -40,7 +40,7 @@
                     </tbody>
                 </table>
                 <div class="row float-right">
-                    <a href="{{ path('bills.new') }}" class="btn btn-success">Confirmer la commande</a>
+                    <a href="{{ path('bill_new') }}" class="btn btn-success">Confirmer la commande</a>
                 </div>
             {% else %}
                 <p></p>

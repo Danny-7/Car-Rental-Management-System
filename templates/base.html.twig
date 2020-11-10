@@ -31,27 +31,27 @@
 						</li>
 						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 							<li class="nav-item">
-								<a class="nav-link" href="{{ path('user.space') }}">Mon espace</a>
+								<a class="nav-link" href="{{ path('user_space_index') }}">Mon espace</a>
 							</li>
 						{% endif %}
 					</ul>
 
 					<form class="form-inline my-2 my-lg-0">
 						{% if is_granted('IS_ANONYMOUS') %}
-							<a class="btn btn-primary" href={{ path('app.register') }}>Créer un compte</a>
+							<a class="btn btn-primary" href={{ path('app_register') }}>Créer un compte</a>
 
-							<a class="btn btn-primary" href={{ path('app.login') }}>Se connecter</a>
+							<a class="btn btn-primary" href={{ path('app_login') }}>Se connecter</a>
 						{% else %}
 							<li class="nav-item mx-3" style="color: #fff; list-style-type: none">
 								Bienvenue, {{app.user.name}}
 							</li>
-							<a href="{{path('cart')}}" class="nav-link cart position-relative d-inline-flex" aria-label="View your shopping cart" style="color: #fff;">
+							<a href="{{path('cart_index')}}" class="nav-link cart position-relative d-inline-flex" aria-label="View your shopping cart" style="color: #fff;">
 								{% set cart = app.session.get('cart') %}
 								{% set length = cart ? cart | length : 0 %}
 								<i class="fas fa-shopping-cart fa-lg"></i>
 								<span class='badge badge-pill cart-count'>{{ length }}</span>
 							</a>
-							<a class="btn btn-primary" href={{ path('app.logout') }}>Se déconnecter</a>
+							<a class="btn btn-primary" href={{ path('app_logout') }}>Se déconnecter</a>
 						{% endif %}
 					</form>
 				</div>

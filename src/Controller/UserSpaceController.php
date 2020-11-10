@@ -5,14 +5,21 @@ namespace App\Controller;
 use App\Service\Car\CarService;
 use App\Service\User\UserService;
 use App\Service\Bill\BillingService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class UserSpaceController
+ * @package App\Controller
+ * @Route("/user-space", name="user_space_")
+ */
 class UserSpaceController extends AbstractController
 {
-    private $userService;
-    private $carService;
-    private $billingService;
+    private UserService $userService;
+    private CarService $carService;
+    private BillingService $billingService;
 
     public function __construct(UserService $userService, CarService $carService, BillingService $billingService)
     {
@@ -23,7 +30,7 @@ class UserSpaceController extends AbstractController
 
     /**
      * Dashboard of the user
-     * @Route("/user/space", name="user.space")
+     * @Route("/", name="index")
      */
     public function index()
     {
@@ -43,9 +50,9 @@ class UserSpaceController extends AbstractController
 
     /**
      * Show actually cars rented ( not returned )
-     * @Route("/user/space/client/rentals-{id}", name="user.space.client.rentals")
+     * @Route("/client/rentals-{id}", name="client_rentals")
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function showRentals(int $id)
     {
@@ -64,7 +71,7 @@ class UserSpaceController extends AbstractController
 
     /**
      * Show all bills of the client
-     * @Route("/user/space/client/bills-{id}", name="user.space.client.bills")
+     * @Route("/client/bills-{id}", name="client_bills")
      * @param int $id
      */
     public function showBills(int $id)
@@ -97,7 +104,9 @@ class UserSpaceController extends AbstractController
 
 
     /**
-     * @Route("/user/space/car/return/{id}", name="user.space.car.return")
+     * @Route("/car/return/{id}", name="car_return")
+     * @param int $id
+     * @return RedirectResponse
      */
     public function returnCar(int $id)
     {
@@ -109,7 +118,7 @@ class UserSpaceController extends AbstractController
         $this->billingService->returnCarBill($id);
 
         $this->addFlash('message', "Le véhicule à bien été rendu");
-        return $this->redirectToRoute("comment.add", [
+        return $this->redirectToRoute("comment_add", [
             'id' => $bill->getId()
         ]);
     }

@@ -19,8 +19,8 @@ class RegistrationType extends AbstractType
             ->add('email')
             ->add('role', ChoiceType::class, [
                 'choices' => [
-                    'Entreprise' => 'Entreprise',
-                    'Loueur' => 'Loueur'
+                    'Entreprise' => 'ROLE_CLIENT',
+                    'Loueur' => 'ROLE_RENTER'
                 ]
             ])
         ;

@@ -12,7 +12,7 @@
             {% for message in app.flashes('notif') %}
                 <div class="alert alert-dismissible alert-success"  style="margin: 0 auto">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Bravo !</strong> Votre commande à correctement été ajouté à <a href="{{ path('cart') }} " class="alert-link">votre panier !</a>
+                    <strong>Bravo !</strong> Votre commande à correctement été ajouté à <a href="{{ path('cart_index') }} " class="alert-link">votre panier !</a>
                 </div>
             {% endfor %}
         </div>
@@ -22,7 +22,7 @@
                 <div class="card" style="width: 350px; margin: 1em auto">
                     <img class="card-img-top" src="{{asset('uploads/cars/')}}{{ car.image }}" alt="{{ car.type }}" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
-                        <a href="{{ path('car.show', {id : car.id}) }}" class=""card-title>{{ car.type }}</a>
+                        <a href="{{ path('car_show', {id : car.id}) }}" class="card-title">{{ car.type }}</a>
                         <h5 class="title">{{car.amount}} €/J</h5>
                         <ul class="card-text">
                             <li>{{ car.datasheet['category'] }}</li>
@@ -33,9 +33,9 @@
                         </ul>
                         <p class="card-text">Quantité en stock : {{ car.quantity }}</p>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a href="{{ path('car.rent', {id : car.id}) }}" class="btn btn-primary">Louer</a>
+                            <a href="{{ path('car_rent', {id : car.id}) }}" class="btn btn-primary">Louer</a>
                         {% else %}
-                            <a href="{{ path('car.show', {id : car.id}) }}" class="btn btn-primary">En savoir plus</a>
+                            <a href="{{ path('car_show', {id : car.id}) }}" class="btn btn-primary">En savoir plus</a>
                         {% endif %}
                     </div>
                 </div>

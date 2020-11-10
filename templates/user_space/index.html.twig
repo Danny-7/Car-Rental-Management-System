@@ -1,37 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon espace - Loueur
+{% block title %}Mon espace -
+	{% if app.user.role == 'ROLE_RENTER' %}
+		Entreprise
+	{% elseif app.user.role == 'ROLE_CLIENT' %}
+		Loueur
+	{% endif %}
 {% endblock %}
 
 {% block content %}
 	<div style="display: flex;">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="flex:0.15; min-height: calc(100vh - 96px); display: block">
 			<li class="navbar-brand">
-				{% if app.user.role == 'Entreprise' %}
+				{% if app.user.role == 'ROLE_CLIENT' %}
 					Entreprise
-				{% elseif app.user.role == 'Loueur'%}
+				{% elseif app.user.role == 'ROLE_RENTER'%}
 					Loueur
 				{% else %}
 					Admin
 				{% endif %}
 			</li>
 			<ul class="navbar-nav mr-auto" style="display: block;">
-				{% if app.user.role == 'Entreprise' %}
+				{% if app.user.role == 'ROLE_CLIENT' %}
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('user.space.client.rentals', { id : app.user.id}) }}">Mes locations</a>
+					<a class="nav-link" href="{{ path('user_space_client_rentals', { id : app.user.id}) }}">Mes locations</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('user.space.client.bills', { id : app.user.id}) }}">Mes factures</a>
+					<a class="nav-link" href="{{ path('user_space_client_bills', { id : app.user.id}) }}">Mes factures</a>
 				</li>
-				{% elseif app.user.role == 'Loueur' %}
+				{% elseif app.user.role == 'ROLE_RENTER' %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('user.space.cars', { id : app.user.id}) }}">Mes voitures</a>
+						<a class="nav-link" href="{{ path('user_space_renter_cars', { id : app.user.id}) }}">Mes voitures</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('car.new') }}">Ajouter un véhicule</a>
+						<a class="nav-link" href="{{ path('car_new') }}">Ajouter un véhicule</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('user.space.renter.cars.rented') }}">Bilan des locations</a>
+						<a class="nav-link" href="{{ path('user_space_renter_cars_rented') }}">Bilan des locations</a>
 					</li
 				{% endif %}
 

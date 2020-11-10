@@ -3,27 +3,36 @@
 namespace App\Controller;
 
 use App\Service\Cart\CartService;
-use App\Service\Bill\BillingService;
-use App\Service\Car\CarService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+/**
+ * Class CartController
+ * @package App\Controller
+ * @Route("/cart", name="cart_")
+ */
 class CartController extends AbstractController
 {
-    private $carService;
-    private $cartService;
-    private $billingService;
+    private CartService $cartService;
 
     /**
-     * @Route("/cart", name="cart")
+     * CartController constructor.
      * @param CartService $cartService
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(CartService $cartService)
+    public function __construct(CartService $cartService)
     {
-        $cart = $cartService->getFullCart();
-        $totalItems = $cartService->getTotalAmount();
+        $this->cartService = $cartService;
+    }
+
+    /**
+     * @Route("", name="index")
+     * @return Response
+     */
+    public function index()
+    {
+        $cart = $this->cartService->getFullCart();
+        $totalItems = $this->cartService->getTotalAmount();
         return $this->render('cart/index.html.twig', [
             'items' => $cart,
             'totalItems' => $totalItems
@@ -32,16 +41,14 @@ class CartController extends AbstractController
 
 
     /**
-     * @Route("/cart/remove/{id}", name="cart.remove")
+     * @Route("/remove/{id}", name="remove")
      * @param $id
-     * @param CartService $cartService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function remove($id, CartService $cartService)
+    public function remove($id)
     {
-
-        $cartService->remove($id);
-        return $this->redirectToRoute('cart');
+        $this->cartService->remove($id);
+        return $this->redirectToRoute('cart_index');
     }
 
 }

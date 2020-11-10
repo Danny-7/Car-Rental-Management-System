@@ -50,12 +50,12 @@
 								€</td>
 							<td><img src="{{asset('uploads/cars/')}}{{ car.image }}" alt="{{ car.type }}" style="height: 100px; object-fit: cover"></td>
 							<td>
-								<a href="{{ path('user.space.car.edit', {id : car.id }) }}">
+								<a href="{{ path('user_space_renter_car_edit', {id : car.id }) }}">
 									<i class="fas fa-edit btn btn-warning"></i>
 								</a>
 							</td>
 							<td>
-								<a href="{{ path('user.space.car.delete', {id : car.id } ) }}">
+								<a href="{{ path('user_space_renter_car_delete', {id : car.id } ) }}">
 									<i class="fas fa-trash btn btn-danger"></i>
 								</a>
 							</td>

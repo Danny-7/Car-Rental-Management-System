@@ -13,13 +13,19 @@ use App\Service\FileUpload\FileUploader;
 use App\Service\User\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class RenterSpaceController
+ * @package App\Controller
+ * @Route("/user-space/renter", name="user_space_renter_")
+ */
 class RenterSpaceController extends AbstractController
 {
-    private $userService;
-    private $carService;
-    private $billingService;
+    private UserService $userService;
+    private CarService $carService;
+    private BillingService $billingService;
 
     public function __construct(UserService $userService, CarService $carService, BillingService $billingService)
     {
@@ -29,10 +35,11 @@ class RenterSpaceController extends AbstractController
     }
 
     /**
-     * @Route("/user/space/cars/{id}", name="user.space.cars")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/cars/{id}", name="cars")
+     * @param int $id
+     * @return Response
      */
-    public function showCars(int $id)
+    public function showCars(int $id) :Response
     {
         $cars = $this->carService->getAllCarsByOwnerId($id);
         return $this->render("user_space/cars.html.twig", [
@@ -56,9 +63,9 @@ class RenterSpaceController extends AbstractController
 
     /**
      * Show the rented cars of a renter
-     * @Route("/user/space/renter/rented/cars", name="user.space.renter.cars.rented")
+     * @Route("/rented/cars", name="cars_rented")
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function showRentedCars(Request $request)
     {
@@ -83,11 +90,11 @@ class RenterSpaceController extends AbstractController
     }
 
     /**
-     * @Route("/user/space/car/edit/{id}", name="user.space.car.edit")
+     * @Route("car/edit/{id}", name="car_edit")
      * @param Request $request
      * @param FileUploader $fileUploader
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function editCar(Request $request, FileUploader $fileUploader, int $id) {
         $car = $this->carService->getCar($id);
@@ -119,7 +126,7 @@ class RenterSpaceController extends AbstractController
             $this->carService->add($car);
             $this->addFlash('message',"Votre véhicule à bien été modifié");
 
-            return $this->redirectToRoute('user.space.cars');
+            return $this->redirectToRoute('user_space_renter_cars');
 
         }
 
@@ -129,12 +136,13 @@ class RenterSpaceController extends AbstractController
     }
 
     /** The renter can remove a car from his list
-     * @Route("/user/space/car/delete/{id}", name="user.space.car.delete")
+     * @Route("/car/delete/{id}", name="car_delete")
+     * @param int $id
      */
-    public function removeCar(int $id) {
+    public function removeCar(int $id) :Response {
         $this->carService->remove($id);
         $this->addFlash('message', "Votre véhicule a bien été supprimé");
-        return $this->redirectToRoute("user.space.cars");
+        return $this->redirectToRoute("user_space_renter_cars");
     }
 
 }

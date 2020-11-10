@@ -4,33 +4,34 @@ namespace App\Controller;
 
 use App\Entity\Billing;
 use App\Entity\Car;
-use App\Entity\Comment;
-use App\Repository\CommentRepository;
 use App\Form\NewCarType;
 use App\Form\RentCarType;
-use App\Form\CommentType;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
 use App\Service\Bill\BillingService;
 use App\Service\User\UserService;
 use App\Service\Comment\CommentService;
 use App\Service\FileUpload\FileUploader;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use function Sodium\add;
 
+/**
+ * Class CarController
+ * @package App\Controller
+ */
 class CarController extends AbstractController
 {
-    private $carService;
-    private $commentService;
-    private $billingService;
-    private $userService;
+    private CarService $carService;
+    private CommentService $commentService;
+    private BillingService $billingService;
+    private UserService $userService;
 
-    public function __construct(CarService $carService, BillingService $billingService, UserService $userService, CommentService $commentService)
+    public function __construct(CarService $carService,
+                                BillingService $billingService,
+                                UserService $userService,
+                                CommentService $commentService)
     {
         $this->carService = $carService;
         $this->billingService = $billingService;
@@ -51,10 +52,10 @@ class CarController extends AbstractController
     }
 
     /**
-     * @Route("/car/new", name="car.new")
+     * @Route("/car/new", name="car_new")
      * @param Request $request
      * @param FileUploader $fileUploader
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function createCar(Request $request, FileUploader $fileUploader)
     {
@@ -97,9 +98,9 @@ class CarController extends AbstractController
     }
 
     /**
-     * @Route("/car/{id}", name="car.show")
+     * @Route("/car/{id}", name="car_show")
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function showCar($id)
     {
@@ -111,11 +112,11 @@ class CarController extends AbstractController
     }
 
     /**
-     * @Route("/car/rent/{id}", name="car.rent")
+     * @Route("/car/rent/{id}", name="car_rent")
      * @param $id
      * @param Request $request
      * @param CartService $cartService
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function rentCar($id, Request $request, CartService $cartService)
     {

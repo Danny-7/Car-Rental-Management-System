@@ -37,9 +37,9 @@
                         <td><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
 
                         {% if bill[0].paid == false %}
-                            <td><a href="{{ path('cart.pay', {id : bill[0].id }) }}" class="btn btn-success">Régler la commande</a></td>
+                            <td><a href="{{ path('cart_pay', {id : bill[0].id }) }}" class="btn btn-success">Régler la commande</a></td>
                         {% else %}
-                            <td><a href="{{ path('user.space.car.return', {id : bill[0].id }) }}" class="btn btn-danger">Rendre le véhicule</a></td>
+                            <td><a href="{{ path('user_space_car_return', {id : bill[0].id }) }}" class="btn btn-danger">Rendre le véhicule</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
