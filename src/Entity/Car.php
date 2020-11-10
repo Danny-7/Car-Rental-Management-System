@@ -62,7 +62,7 @@ class Car
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="car", orphanRemoval=true)
      */
-    private ArrayCollection $comments;
+    private Collection $comments;
 
     public function __construct()
     {
