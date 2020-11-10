@@ -38,7 +38,7 @@ class BillController extends AbstractController
      * @Route("/new", name="new")
      * @return Response
      */
-    public function createBill()
+    public function createBill() :Response
     {
         $order = $this->cartService->getFullCart();
         foreach ($order as $item){
@@ -62,7 +62,7 @@ class BillController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function billPay(int $id)
+    public function billPay(int $id) :Response
     {
 
         $bill = $this->billingService->getBill($id);
@@ -83,10 +83,10 @@ class BillController extends AbstractController
 
     /**
      * @Route("/update/{id}", name="update")
-     * @param $id
-     * @return RedirectResponse
+     * @param int $id
+     * @return Response
      */
-    public function updateBill (int $id)
+    public function updateBill (int $id) :Response
     {
         $bill = $this->billingService->getBill($id);
 

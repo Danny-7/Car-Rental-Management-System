@@ -30,7 +30,10 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     private $csrfTokenManager;
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager,
+                                UrlGeneratorInterface $urlGenerator,
+                                CsrfTokenManagerInterface $csrfTokenManager,
+                                UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
@@ -69,7 +72,6 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException("L'adresse email n'est pas enregistrée.");
         }
 
@@ -87,7 +89,6 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         return new RedirectResponse($this->urlGenerator->generate('cars'));
 
     }

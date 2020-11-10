@@ -67,7 +67,7 @@ class RenterSpaceController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function showRentedCars(Request $request)
+    public function showRentedCars(Request $request) :Response
     {
         $searchData = new SearchBillData();
         $searchForm = $this->createForm(BillsFilterType::class, $searchData);
@@ -96,7 +96,8 @@ class RenterSpaceController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function editCar(Request $request, FileUploader $fileUploader, int $id) {
+    public function editCar(Request $request, FileUploader $fileUploader, int $id) :Response
+    {
         $car = $this->carService->getCar($id);
 
         $form = $this->createForm(NewCarType::class, $car);
@@ -138,8 +139,10 @@ class RenterSpaceController extends AbstractController
     /** The renter can remove a car from his list
      * @Route("/car/delete/{id}", name="car_delete")
      * @param int $id
+     * @return Response
      */
-    public function removeCar(int $id) :Response {
+    public function removeCar(int $id) :Response
+    {
         $this->carService->remove($id);
         $this->addFlash('message', "Votre véhicule a bien été supprimé");
         return $this->redirectToRoute("user_space_renter_cars");

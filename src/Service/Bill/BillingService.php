@@ -7,16 +7,15 @@ use App\Entity\Car;
 use App\Entity\User;
 use App\Entity\Billing;
 use App\Service\Car\CarService;
-use App\Service\Cart\CartService;
 use App\Repository\BillingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class BillingService
 {
-    private $entityManager;
-    private $repository;
-    private $carService;
+    private EntityManagerInterface $entityManager;
+    private BillingRepository $repository;
+    private CarService $carService;
     private const NB_VIP_CAR = 10;
     private const REDUCE_PCT = 0.1;
 
@@ -31,26 +30,6 @@ class BillingService
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->carService = $carService;
-    }
-
-    public function getCountOfRentedCars($idUser) :int
-    {
-        return $this->repository->getCountOfRentedCarsByUser($idUser);
-    }
-
-    public function getCountOfReturnedCars($idUser) :int
-    {
-        return $this->repository->getCountCarsByUserWithOption($idUser, true);
-    }
-
-    public function getCountOfAvailableCars($idUser) :int
-    {
-        return $this->repository->getCountCarsByUserWithOption($idUser, false);
-    }
-
-    public function getTotalAmountPaid(int $idUser) :int
-    {
-        return $this->repository->getAmountOfRentalsPaid($idUser);
     }
 
     public function getDashboardInfo(int $idUser) : array
@@ -113,7 +92,8 @@ class BillingService
         $this->entityManager->persist($bill);
     }
 
-    public function removeBill (int $id) {
+    public function removeBill (int $id)
+    {
 
         $bill = $this->repository->find($id);
 
@@ -121,7 +101,8 @@ class BillingService
         $this->entityManager->flush();
     }
 
-    public function returnCarBill (int $id) {
+    public function returnCarBill (int $id)
+    {
 
         $bill = $this->repository->find($id);
 

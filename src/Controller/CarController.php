@@ -42,8 +42,9 @@ class CarController extends AbstractController
 
     /**
      * @Route("/cars", name="cars")
+     * @return Response
      */
-    public function index()
+    public function index() :Response
     {
         $cars = $this->carService->getAllCars();
         return $this->render('car/index.html.twig', [
@@ -57,7 +58,7 @@ class CarController extends AbstractController
      * @param FileUploader $fileUploader
      * @return Response
      */
-    public function createCar(Request $request, FileUploader $fileUploader)
+    public function createCar(Request $request, FileUploader $fileUploader) :Response
     {
         $car = new Car();
 
@@ -102,7 +103,7 @@ class CarController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function showCar($id)
+    public function showCar($id) :Response
     {
         $car = $this->carService->getCar($id);
 
@@ -118,7 +119,7 @@ class CarController extends AbstractController
      * @param CartService $cartService
      * @return Response
      */
-    public function rentCar($id, Request $request, CartService $cartService)
+    public function rentCar($id, Request $request, CartService $cartService) :Response
     {
         $car = $this->carService->getCar($id);
         $bill = new Billing();

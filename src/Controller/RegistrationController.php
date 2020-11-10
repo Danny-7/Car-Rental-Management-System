@@ -26,7 +26,8 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request,EntityManagerInterface $em,
                              UserPasswordEncoderInterface $encoder,
-                             GuardAuthenticatorHandler $guardAuthenticatorHandler, UserAuthenticator $userAuthenticator)
+                             GuardAuthenticatorHandler $guardAuthenticatorHandler,
+                             UserAuthenticator $userAuthenticator) :Response
     {
         if($this->isGranted('IS_AUTHENTICATED_FULLY')){
             return $this->redirectToRoute('cars');

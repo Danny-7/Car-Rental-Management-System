@@ -19,50 +19,50 @@ class Car
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Entrez un type valide")
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $datasheet = [];
+    private array $datasheet = [];
 
     /**
      * @ORM\Column(type="float")
      * @Assert\GreaterThan(value = 0, message="Entrez un prix valide")
      */
-    private $amount;
+    private ?float $amount;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $rent;
+    private ?string $rent;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $image;
+    private ?string $image;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      */
-    private $idOwner;
+    private ?User $idOwner;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\GreaterThan(value=0, message="Entrez une quantité supérieure à 0")
      */
-    private $quantity;
+    private ?int $quantity;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="car", orphanRemoval=true)
      */
-    private $comments;
+    private ArrayCollection $comments;
 
     public function __construct()
     {

@@ -6,12 +6,12 @@ namespace App\Entity;
 
 class SearchBillData
 {
-    private $user;
+    private User $user;
 
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getUser() :User
     {
         return $this->user;
     }

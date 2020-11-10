@@ -17,46 +17,46 @@ class Billing
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idUser;
+    private ?User $idUser;
 
     /**
      * @ORM\ManyToOne(targetEntity=Car::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idCar;
+    private ?Car $idCar;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\GreaterThanOrEqual("today UTC", message="La date de début de location doit être supérieure ou égale à celle d'aujourdhui")
      */
-    private $startDate;
+    private ?\DateTimeInterface $startDate;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\GreaterThan("today UTC", message="La date de fin de location doit être supérieure à celle du début")
      */
-    private $endDate;
+    private ?\DateTimeInterface $endDate;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $price;
+    private ?float $price;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $paid;
+    private ?bool $paid;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $returned;
+    private ?bool $returned;
 
     public function getId(): ?int
     {

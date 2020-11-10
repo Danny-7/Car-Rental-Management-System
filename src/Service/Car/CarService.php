@@ -3,15 +3,13 @@
 namespace App\Service\Car;
 
 use App\Entity\Car;
-use App\Service\Bill\BillingService;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CarService
-{  
-    private $carEm;
-    private $carRepository;
+{
+    private EntityManagerInterface $carEm;
+    private CarRepository $carRepository;
     
     public function __construct( EntityManagerInterface $carEm, CarRepository $carRepository)
     {
@@ -21,14 +19,12 @@ class CarService
 
     public function getAllCars() :array
     {
-        $cars = $this->carRepository->findAll();
-        return $cars;
+        return $this->carRepository->findAll();
     }
 
     public function getAllCarsByOwnerId(int $ownerId) :array
     {
-        $cars = $this->carRepository->findBy(['idOwner' => $ownerId]);
-        return $cars;
+        return $this->carRepository->findBy(['idOwner' => $ownerId]);
     }
 
     public function getCar(int $id) :Car
@@ -39,7 +35,7 @@ class CarService
     public function add(Car $car)
     {
         $this->carEm->persist($car);
-        $this->carEm->flush($car);
+        $this->carEm->flush();
     }
 
     public function remove(int $id)

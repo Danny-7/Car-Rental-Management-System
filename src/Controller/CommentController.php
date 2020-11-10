@@ -43,7 +43,8 @@ class CommentController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function addComment (int $id, Request $request) :Response {
+    public function addComment (int $id, Request $request) :Response
+    {
 
         $comment = new Comment();
         $bill = $this->billingService->getBill($id);

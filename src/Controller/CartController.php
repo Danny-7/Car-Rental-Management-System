@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\Cart\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,7 +30,7 @@ class CartController extends AbstractController
      * @Route("", name="index")
      * @return Response
      */
-    public function index()
+    public function index() :Response
     {
         $cart = $this->cartService->getFullCart();
         $totalItems = $this->cartService->getTotalAmount();
@@ -43,9 +44,9 @@ class CartController extends AbstractController
     /**
      * @Route("/remove/{id}", name="remove")
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
-    public function remove($id)
+    public function remove($id) :Response
     {
         $this->cartService->remove($id);
         return $this->redirectToRoute('cart_index');

@@ -10,8 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserService
 {
-    private $userRepository;
-    private $entityManager;
+    private UserRepository $userRepository;
+    private EntityManagerInterface $entityManager;
 
     /**
      * UserService constructor.

@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class FileUploader
 {
-    private $targetDirectory;
-    private $slugger;
+    private string $targetDirectory;
+    private SluggerInterface $slugger;
 
-    public function __construct($targetDirectory, SluggerInterface $slugger)
+    public function __construct(string $targetDirectory, SluggerInterface $slugger)
     {
         $this->targetDirectory = $targetDirectory;
         $this->slugger = $slugger;
@@ -31,9 +31,8 @@ class FileUploader
         return $fileName;
     }
 
-    public function getTargetDirectory()
+    public function getTargetDirectory() :string
     {
-        // available on service.yaml
         return $this->targetDirectory;
     }
 }

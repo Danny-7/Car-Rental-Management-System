@@ -17,7 +17,7 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -29,24 +29,24 @@ class User implements UserInterface
      * )
      * @Assert\Regex(pattern="/^[a-zA-Z]{1,15}$/", message="Veuillez entrer un nom valide")
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(message="Entrez une adresse email valide")
      */
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Regex(pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/", message="La chaine de caractères doit contenir des caractères miniscules et majuscules, un chiffre et avoir une longueur de 8 caractères ")
      */
-    private $password;
+    private ?string $password;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $role;
+    private ?string $role;
 
     public function getId(): ?int
     {

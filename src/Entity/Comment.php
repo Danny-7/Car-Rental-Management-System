@@ -15,28 +15,28 @@ class Comment
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $author;
+    private ?string $author;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private ?string $content;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private ?\DateTimeInterface $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Car::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $car;
+    private ?Car $car;
 
     public function getId(): ?int
     {

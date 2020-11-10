@@ -31,8 +31,9 @@ class UserSpaceController extends AbstractController
     /**
      * Dashboard of the user
      * @Route("/", name="index")
+     * @return Response
      */
-    public function index()
+    public function index() :Response
     {
         // nb rented cars on the card (done)
             // - nb rented cars returned (done)
@@ -54,7 +55,7 @@ class UserSpaceController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function showRentals(int $id)
+    public function showRentals(int $id) :Response
     {
         $bills = $this->billingService->showBillsOfUserNotReturned($id);
         $billsFormatted = array();
@@ -73,8 +74,9 @@ class UserSpaceController extends AbstractController
      * Show all bills of the client
      * @Route("/client/bills-{id}", name="client_bills")
      * @param int $id
+     * @return Response
      */
-    public function showBills(int $id)
+    public function showBills(int $id) :Response
     {
         $bills = $this->billingService->showBillsOfUser($id);
         $billsFormatted = array();
@@ -106,9 +108,9 @@ class UserSpaceController extends AbstractController
     /**
      * @Route("/car/return/{id}", name="car_return")
      * @param int $id
-     * @return RedirectResponse
+     * @return Response
      */
-    public function returnCar(int $id)
+    public function returnCar(int $id) :Response
     {
 
         $bill = $this->billingService->getBill($id);
