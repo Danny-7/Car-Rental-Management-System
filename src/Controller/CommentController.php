@@ -8,15 +8,15 @@ use App\Service\User\UserService;
 use App\Service\Bill\BillingService;
 use App\Service\Comment\CommentService;
 use App\Form\CommentType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class CommentController
  * @package App\Controller
- * Route("/comment", name="comment_")
+ * @Route("/comment", name="comment_")
  */
 class CommentController extends AbstractController
 {
@@ -72,7 +72,6 @@ class CommentController extends AbstractController
                 'id' => $user->getId()
             ]);
         }
-
         return $this->render('comment/comment.add.html.twig', [
             'user' => $user,
             'commentForm' => $commentForm->createView()

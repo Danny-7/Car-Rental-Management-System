@@ -1,0 +1,58 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}
+    Les facturations
+{% endblock %}
+
+{% block dashboard %}
+    <div class="container-fluid h-100">
+        <p></p>
+        <div class="">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Véhicule</th>
+                    <th>Propriétaire</th>
+                    <th>Date de location</th>
+                    <th>Date de fin de location</th>
+                    <th>Montant en €</th>
+                    <th>État de la location</th>
+                    <th>État du paiement</th>
+                    <th>Photo</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for bill in bills %}
+                    <tr>
+                        <td>{{ bill[1].type }}</td>
+                        <td>{{ bill[1].idOwner.name }}</td>
+                        <td>{{ bill[0].startDate | date('d-m-Y') }}</td>
+                        {% if bill[0].endDate != null %}
+                            <td>{{ bill[0].endDate | date('d-m-Y') }}</td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+                        <td>{{ bill[0].price }} €</td>
+
+                        {% if bill[0].returned %}
+                            <td>Terminée</td>
+                        {% else %}
+                            <td>En cours</td>
+                        {% endif %}
+
+
+                        {% if bill[0].paid == true %}
+                            <td>Terminé</td>
+                        {% else %}
+                            <td>Non effectué</td>
+                        {% endif %}
+
+                        <td><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+

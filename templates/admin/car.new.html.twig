@@ -1,0 +1,53 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}
+    Ajout d'un véhicule
+{% endblock %}
+
+{% block dashboard %}
+    <div class="container-fluid h-100">
+        <div class="d-flex flex-column h-100 justify-content-center align-items-center">
+            <h1>Formulaire d'ajout d'une voiture</h1>
+            <form method="post" enctype="multipart/form-data" class="w-50 p-3">
+                {{form_start(form)}}
+
+                {{ form_errors(form) }}
+
+                {{form_row(form.type, { 'label' : 'Marque et modèle du véhicule','attr' : { 'placeholder': 'Entrez le type de la voiture'}})}}
+
+                {{form_row(form.amount, { 'label' : 'Prix de la location', 'attr' : { 'placeholder': 'Entrez le prix de la location'}})}}
+                <div class="form-group d-flex justify-content-between">
+                    <div style="width: 45%">
+                        {{form_row(form.fuel, {'label' : 'Carburant'})}}
+                    </div>
+                    <div style="width: 45%">
+                        {{form_row(form.category, {'label' : 'Catégorie'})}}
+                    </div>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                    <div style="width: 45%">
+                        {{form_row(form.engine, {'label' : 'Moteur'})}}
+                    </div>
+                    <div style="width: 45%">
+                        {{form_row(form.shift, {'label' : 'Boite de vitesse'})}}
+                    </div>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                    <div style="width: 45%">
+                        {{form_row(form.nb_portes, {'label' : 'Nb de portes'})}}
+                    </div>
+                    <div style="width: 45%">
+                        {{form_row(form.quantity, {'label' : 'Quantité', 'attr' : { 'placeholder': 'Entrez une quantité'}})}}
+                    </div>
+                </div>
+
+
+                {{form_row(form.attachment,{'label' : 'Image de la voiture'})}}
+                <button type="submit" class="btn bg-primary mx-auto text-light px-5 py-2">Enregister</button>
+                {{form_end(form)}}
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
+

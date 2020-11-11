@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Service\Car\CarService;
 use App\Service\User\UserService;
 use App\Service\Bill\BillingService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,19 +29,12 @@ class UserSpaceController extends AbstractController
 
     /**
      * Dashboard of the user
-     * @Route("/", name="index")
+     * @Route("", name="index")
      * @return Response
      */
     public function index() :Response
     {
-        // nb rented cars on the card (done)
-            // - nb rented cars returned (done)
-            // - nb rentals available (done)
-        //        dump($nbRentedCars, $nbReturnedCars, $nbAvailableCars, $totalAmountPaid);
-        // amount of rented cars in one month
-        // nb unpaid rentals
         $infos = $this->billingService->getDashboardInfo($this->getUser()->getId());
-
         return $this->render("user_space/dashboard.html.twig", [
             'infos' => $infos
         ]);
@@ -90,7 +82,7 @@ class UserSpaceController extends AbstractController
         ]);
     }
 
-    private function arrangeBills(array $bills): array
+    private function arrangeBills(array $bills) :array
     {
         $filteredBills = array();
         foreach ($bills as $bill) {
@@ -120,7 +112,7 @@ class UserSpaceController extends AbstractController
         $this->billingService->returnCarBill($id);
 
         $this->addFlash('message', "Le véhicule à bien été rendu");
-        return $this->redirectToRoute("comment_add", [
+        return $this->redirectToRoute('comment_add', [
             'id' => $bill->getId()
         ]);
     }

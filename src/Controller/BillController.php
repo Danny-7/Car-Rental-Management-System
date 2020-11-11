@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
 use App\Service\Bill\BillingService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,7 +57,7 @@ class BillController extends AbstractController
 
 
     /**
-     * @Route("/pay", name="pay")
+     * @Route("/pay-{id}", name="pay")
      * @param $id
      * @return Response
      */

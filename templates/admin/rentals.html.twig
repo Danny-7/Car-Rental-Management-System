@@ -1,0 +1,33 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}
+    Gestion des locations
+{% endblock %}
+
+{% block dashboard %}
+    <div class="container-fluid h-100">
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Véhicule</th>
+                    <th>Date de location</th>
+                    <th>Date de fin de location</th>
+                    <th>Photo</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rental in rentals %}
+                    <tr>
+                        <td>{{ rental[1].type }}</td>
+                        <td>{{ rental[0].startDate | date('d-m-Y') }}</td>
+                        <td>{{ rental[0].endDate | date('d-m-Y') }}</td>
+                        <td><img src="{{ asset('uploads/cars/') }}{{ rental[1].image }}" alt="{{ rental[1].type }}" style="height: 100px; object-fit: cover"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+

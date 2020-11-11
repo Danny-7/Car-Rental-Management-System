@@ -32,9 +32,14 @@ class BillingService
         $this->carService = $carService;
     }
 
-    public function getDashboardInfo(int $idUser) : array
+    public function getDashboardInfo(?int $idUser) : array
     {
-        $bills = $this->repository->findBy(['idUser' => $idUser]);
+        if($idUser){
+            $bills = $this->repository->findBy(['idUser' => $idUser]);
+        }
+        else {
+            $bills = $this->repository->findAll();
+        }
         $nbRentedCars = $nbReturnedCars = $nbAvailableCars = $totalAmountPaid = $nbUnpaid = $amountCurrMonthRentals = 0;
 
         foreach ($bills as $bill){

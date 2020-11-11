@@ -14,14 +14,15 @@
 			<li class="navbar-brand">
 				{% if app.user.role == 'ROLE_CLIENT' %}
 					Entreprise
-				{% elseif app.user.role == 'ROLE_RENTER'%}
-					Loueur
 				{% else %}
-					Admin
+					Loueur
 				{% endif %}
 			</li>
 			<ul class="navbar-nav mr-auto" style="display: block;">
 				{% if app.user.role == 'ROLE_CLIENT' %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('user_space_index') }}">Dashboard</a>
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('user_space_client_rentals', { id : app.user.id}) }}">Mes locations</a>
 				</li>
@@ -29,6 +30,9 @@
 					<a class="nav-link" href="{{ path('user_space_client_bills', { id : app.user.id}) }}">Mes factures</a>
 				</li>
 				{% elseif app.user.role == 'ROLE_RENTER' %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('user_space_renter_index') }}">Dashboard</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('user_space_renter_cars', { id : app.user.id}) }}">Mes voitures</a>
 					</li>

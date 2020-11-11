@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panneau admin - RentCar
+{% endblock %}
+
+{% block content %}
+    <div style="display: flex;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="flex:0.2; min-height: calc(100vh - 96px); display: block">
+            <li class="navbar-brand">
+               ADMINISTRATEUR
+            </li>
+            <ul class="navbar-nav mr-auto" style="display: block;">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_index') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed text-truncate" href="" data-toggle="collapse" data-target="#submenu">
+                        <i class="fas fa-car"></i> <span class=" d-none d-sm-inline">Gestion des véhicules</span>
+                    </a>
+                    <div class="collapse" id="submenu" aria-expanded="false">
+                        <ul class="flex-column pl-2 nav">
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="{{ path('admin_cars') }}"><span>Consulter les véhicules</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="{{ path('admin_car_new') }}" ><span>Ajouter un véhicule</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed text-truncate" href="" data-toggle="collapse" data-target="#submenu1">
+                        <i class="fas fa-clipboard-list"></i> <span class=" d-none d-sm-inline">Gestion des locations</span>
+                    </a>
+                    <div class="collapse" id="submenu1" aria-expanded="false">
+                        <ul class="flex-column pl-2 nav">
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="{{ path('admin_rentals') }}"><span>Consulter les locations</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="{{ path('admin_bills') }}" ><span>Consulter les facturations</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed text-truncate" href="" data-toggle="collapse" data-target="#submenu2">
+                        <i class="fas fa-users"></i> <span class=" d-none d-sm-inline">Gestion des utilisateurs</span>
+                    </a>
+                    <div class="collapse" id="submenu2" aria-expanded="false">
+                        <ul class="flex-column pl-2 nav">
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="{{ path('admin_users') }}"><span>Consulter les utilisateurs</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link py-1" href="#" ><span>Modifier un utilisateur</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        {% block dashboard %}
+        <div style="flex: 1;">
+            <p></p>
+            <div class="d-flex">
+                {% for message in app.flashes('message_paid') %}
+                    <div class="alert alert-dismissible alert-success"  style="margin: 0 auto 10px">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        Votre commande a été correctement réglée !
+                        Vous pouvez désormais rendre le véhicule dans l'onglet "Mes Locations".
+                    </div>
+                {% endfor %}
+            </div>
+                <div class="container">
+                    <div class="mt-4">
+                        <div class="row my-4">
+                            <div class="col-4">
+                                <div class="card bg-primary" style="max-width: 18rem;">
+                                    <div class="card-body text-center">
+                                        <div class="row">
+                                            <i class="fas fa-car icon text-center text-white my-4 display-4 mx-auto"></i>
+                                        </div>
+                                        <div class="mx-auto">
+                                            <h6 class="text-white ">Nombre de voiture louées</h6>
+                                            <h2 class="text-white text-bold">{{ infos[0] }}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card bg-primary" style="max-width: 18rem;">
+                                    <div class="card-body text-center">
+                                        <div class="row">
+                                            <i class="fas fa-undo icon text-center text-white my-4 display-4 mx-auto"></i>
+                                        </div>
+                                        <div class="mx-auto">
+                                            <h6 class="text-white ">Nombre de voiture retournées</h6>
+                                            <h2 class="text-white text-bold">{{ infos[1] }}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card bg-primary" style="max-width: 18rem;">
+                                    <div class="card-body text-center">
+                                        <div class="row">
+                                            <i class="fas fa-car icon text-center text-white my-4 display-4 mx-auto"></i>
+                                        </div>
+                                        <div class="mx-auto">
+                                            <h6 class="text-white ">Nombre de voiture disponibles</h6>
+                                            <h2 class="text-white text-bold">{{ infos[2] }}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card bg-primary" style="max-width: 18rem;">
+                                    <div class="card-body text-center">
+                                        <div class="row">
+                                            <i class="fas fa-euro-sign icon text-center text-white my-4 display-4 mx-auto"></i>
+                                        </div>
+                                        <div class="mx-auto">
+                                            <h6 class="text-white ">Montant des locations</h6>
+                                            <h2 class="text-white text-bold">{{ infos[3] }}€</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card bg-primary" style="max-width: 18rem;">
+                                    <div class="card-body text-center">
+                                        <div class="row">
+                                            <i class="fas fa-euro-sign icon text-center my-4 display-4 mx-auto" style="color:red"></i>
+                                        </div>
+                                        <div class="mx-auto">
+                                            <h6 class="text-white ">Nombre de locations non payée</h6>
+                                            <h2 class="text-white text-bold">{{ infos[4] }}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card bg-primary" style="max-width: 18rem;">
+                                    <div class="card-body text-center">
+                                        <div class="row">
+                                            <i class="fas fa-calendar-alt icon text-center text-white my-4 display-4 mx-auto"></i>
+                                        </div>
+                                        <div class="mx-auto">
+                                            <h6 class="text-white ">Montant des locations de ce mois</h6>
+                                            <h2 class="text-white text-bold">{{ infos[5] }}€</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% endblock %}
+    </div>
+{% endblock %}

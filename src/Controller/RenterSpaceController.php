@@ -11,6 +11,7 @@ use App\Service\Bill\BillingService;
 use App\Service\Car\CarService;
 use App\Service\FileUpload\FileUploader;
 use App\Service\User\UserService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class RenterSpaceController
  * @package App\Controller
  * @Route("/user-space/renter", name="user_space_renter_")
+ * @IsGranted("ROLE_RENTER")
  */
 class RenterSpaceController extends AbstractController
 {
@@ -35,6 +37,18 @@ class RenterSpaceController extends AbstractController
     }
 
     /**
+     * @Route("", name="index")
+     * @return Response
+     */
+    public function index(): Response
+    {
+        $infos = $this->billingService->getDashboardInfo($this->getUser()->getId());
+        return $this->render("user_space/dashboard.html.twig", [
+            'infos' => $infos
+        ]);
+    }
+
+    /**
      * @Route("/cars/{id}", name="cars")
      * @param int $id
      * @return Response
@@ -42,7 +56,7 @@ class RenterSpaceController extends AbstractController
     public function showCars(int $id) :Response
     {
         $cars = $this->carService->getAllCarsByOwnerId($id);
-        return $this->render("user_space/cars.html.twig", [
+        return $this->render("user_space/renter/cars.html.twig", [
             'cars' => $cars
         ]);
     }
@@ -83,7 +97,7 @@ class RenterSpaceController extends AbstractController
             $filteredBills = $this->arrangeBills($bills);
         }
 
-        return $this->render('user_space/rentedCars.html.twig', [
+        return $this->render('user_space/renter/rentedCars.html.twig', [
             'bills' => $filteredBills,
             'form' => $searchForm->createView()
         ]);

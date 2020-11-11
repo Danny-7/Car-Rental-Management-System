@@ -1,0 +1,81 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block title %}
+    Les véhicules - RentCar
+{% endblock %}
+
+{% block dashboard %}
+    <div class="container-fluid h-100">
+        <div class="d-flex">
+            {% for message in app.flashes('message') %}
+                <div class="alert alert-dismissible alert-success"  style="margin: 0 auto">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+
+            {% if cars | length == 0 %}
+                <p></p>
+                <p></p>
+                <p class="lead">Aucune voiture pour le moment.</p>
+            {% else %}
+                <table class="table w-75">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Caractéristiques</th>
+                        <th>Montant de la location</th>
+                        <th>Image</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for car in cars %}
+                        <tr>
+                            <td>{{ car.type }}</td>
+                            <td>
+                                <table class="table">
+                                    <thead>
+                                    <th>Catégorie</th>
+                                    <th>Carburant</th>
+                                    <th>Moteur</th>
+                                    <th>Boite de vitesse</th>
+                                    <th>Nombre de portes</th>
+                                    </thead>
+                                    <tbody>
+                                    <td>{{car.datasheet.category}}</td>
+                                    <td>{{car.datasheet.fuel}}</td>
+                                    <td>{{car.datasheet.engine}}</td>
+                                    <td>{{car.datasheet.shift}}</td>
+                                    <td>{{car.datasheet.nb_portes}}</td>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>{{ car.amount }}
+                                €</td>
+                            <td><img src="{{asset('uploads/cars/')}}{{ car.image }}" alt="{{ car.type }}" style="height: 100px; object-fit: cover"></td>
+                            <td>
+                                <a href="{{ path('admin_car_edit', {id : car.id }) }}">
+                                    <i class="fas fa-edit btn btn-warning"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_car_delete', {id : car.id } ) }}">
+                                    <i class="fas fa-trash btn btn-danger"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
