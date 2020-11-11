@@ -19,17 +19,17 @@
 				{% endif %}
 			</li>
 			<ul class="navbar-nav mr-auto" style="display: block;">
-				{% if app.user.role == 'ROLE_CLIENT' %}
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('user_space_index') }}">Dashboard</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('user_space_client_rentals', { id : app.user.id}) }}">Mes locations</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('user_space_client_bills', { id : app.user.id}) }}">Mes factures</a>
-				</li>
-				{% elseif app.user.role == 'ROLE_RENTER' %}
+				{% if is_granted('ROLE_CLIENT') %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('user_space_index') }}">Dashboard</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('user_space_client_rentals', { id : app.user.id}) }}">Mes locations</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('user_space_client_bills', { id : app.user.id}) }}">Mes factures</a>
+					</li>
+				{% elseif is_granted('ROLE_RENTER') %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('user_space_renter_index') }}">Dashboard</a>
 					</li>
@@ -43,12 +43,11 @@
 						<a class="nav-link" href="{{ path('user_space_renter_cars_rented') }}">Bilan des locations</a>
 					</li
 				{% endif %}
-
 			</ul>
 		</nav>
 		<div style="flex: 1;">
 			<p></p>
-			<div class="d-flex">            
+			<div class="d-flex">
 				{% for message in app.flashes('message_paid') %}
 					<div class="alert alert-dismissible alert-success"  style="margin: 0 auto 10px">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -57,7 +56,6 @@
 					</div>
 				{% endfor %}
 			</div>
-
 			{% block dashboard %}{% endblock %}
 		</div>
 	</div>
