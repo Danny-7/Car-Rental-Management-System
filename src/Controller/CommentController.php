@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Billing;
 use App\Entity\Comment;
 use App\Service\Car\CarService;
 use App\Service\User\UserService;
@@ -39,22 +40,20 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/add-{id}", name="add")
-     * @param $id
+     * @param Billing $bill
      * @param Request $request
      * @return Response
      */
-    public function addComment (int $id, Request $request) :Response
+    public function addComment (Billing $bill, Request $request) :Response
     {
 
         $comment = new Comment();
-        $bill = $this->billingService->getBill($id);
-        $car = $this->carService->getCar($bill->getIdCar()->getId());
+        $car = $bill->getIdCar();
 
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
-        $user = $this->userService->getUser($bill->getIdUser()->getId());
-      
+        $user = $bill->getIdUser();
 
         if($commentForm->isSubmitted()){
 

@@ -3,6 +3,7 @@
 namespace App\Service\Car;
 
 use App\Entity\Car;
+use App\Entity\User;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -10,26 +11,21 @@ class CarService
 {
     private EntityManagerInterface $carEm;
     private CarRepository $carRepository;
-    
+
     public function __construct( EntityManagerInterface $carEm, CarRepository $carRepository)
     {
-       $this->carEm = $carEm;
-       $this->carRepository = $carRepository;
-    } 
+        $this->carEm = $carEm;
+        $this->carRepository = $carRepository;
+    }
 
     public function getAllCars() :array
     {
         return $this->carRepository->findAll();
     }
 
-    public function getAllCarsByOwnerId(int $ownerId) :array
+    public function getAllCarsByOwnerId(User $owner) :array
     {
-        return $this->carRepository->findBy(['idOwner' => $ownerId]);
-    }
-
-    public function getCar(int $id) :Car
-    {
-        return $this->carRepository->findOneBy(['id' => $id]);
+        return $this->carRepository->findBy(['idOwner' => $owner->getId()]);
     }
 
     public function add(Car $car)
@@ -38,23 +34,24 @@ class CarService
         $this->carEm->flush();
     }
 
-    public function remove(int $id)
+    public function remove(Car $car)
     {
-        $car = $this->carRepository->find($id);
-
         $this->carEm->remove($car);
         $this->carEm->flush();
     }
 
-    public function return(int $id)
+    public function return(Car $carToUpdate)
     {
-        $carToUpdate = $this->getCar($id);
         $carToUpdate->setQuantity($carToUpdate->getQuantity() + 1);
     }
 
-    public function UpdateCarQuantity(int $id, int $quantity){
-        $carToUpdate = $this->getCar($id);
-        $carToUpdate->setQuantity($carToUpdate->getQuantity() - $quantity);
+    /**
+     * @param Car $car
+     * @param int $quantity
+     */
+    public function UpdateCarQuantity(Car $car, int $quantity)
+    {
+        $car->setQuantity($car->getQuantity() - $quantity);
     }
 
 

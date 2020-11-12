@@ -70,7 +70,7 @@ class CarController extends AbstractController
             $carFile = $form->get('attachment')->getData();
 
             $datasheet = array();
-            
+
             $datasheet['category'] = $form->get('category')->getData();
             $datasheet['fuel'] = $form->get('fuel')->getData();
             $datasheet['engine'] = $form->get('engine')->getData();
@@ -79,10 +79,10 @@ class CarController extends AbstractController
 
             $car->setDataSheet($datasheet);
 
-             if ($carFile) {
-                 $carFileName = $fileUploader->upload($carFile);
-                 $car->setImage($carFileName);
-             }
+            if ($carFile) {
+                $carFileName = $fileUploader->upload($carFile);
+                $car->setImage($carFileName);
+            }
             $car->setRent("disponible");
             $car->setIdOwner($this->getUser());
 
@@ -100,13 +100,11 @@ class CarController extends AbstractController
 
     /**
      * @Route("/car/{id}", name="car_show")
-     * @param $id
+     * @param Car $car
      * @return Response
      */
-    public function showCar($id) :Response
+    public function showCar(Car $car) :Response
     {
-        $car = $this->carService->getCar($id);
-
         return $this->render('car/car.show.html.twig', [
             'car' => $car,
         ]);
@@ -114,14 +112,13 @@ class CarController extends AbstractController
 
     /**
      * @Route("/car/rent/{id}", name="car_rent")
-     * @param $id
+     * @param Car $car
      * @param Request $request
      * @param CartService $cartService
      * @return Response
      */
-    public function rentCar($id, Request $request, CartService $cartService) :Response
+    public function rentCar(Car $car, Request $request, CartService $cartService) :Response
     {
-        $car = $this->carService->getCar($id);
         $bill = new Billing();
         $form = $this->createForm(RentCarType::class, $bill);
         $form->handleRequest($request);
@@ -146,7 +143,7 @@ class CarController extends AbstractController
                 ];
             }
 
-            $cartService->add($id, $rentOptions, $rentOptions['quantity']);
+            $cartService->add($car->getId(), $rentOptions, $rentOptions['quantity']);
 
             $this->addFlash('notif', "Votre commande à été ajoutée au panier.");
 

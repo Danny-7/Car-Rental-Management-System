@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Billing;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
 use App\Service\Bill\BillingService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class BillController
@@ -19,18 +21,21 @@ class BillController extends AbstractController
     private CartService $cartService;
     private BillingService $billingService;
     private CarService $carService;
+    private Security $security;
 
     /**
      * BillController constructor.
      * @param CartService $cartService
      * @param BillingService $billingService
      * @param CarService $carService
+     * @param Security $security
      */
-    public function __construct(CartService $cartService, BillingService $billingService, CarService $carService)
+    public function __construct(CartService $cartService, BillingService $billingService, CarService $carService, Security $security)
     {
         $this->cartService = $cartService;
         $this->billingService = $billingService;
         $this->carService = $carService;
+        $this->security = $security;
     }
 
     /**
@@ -47,7 +52,7 @@ class BillController extends AbstractController
             for($i = 0; $i < $quantity; $i++){
                 $this->billingService->createBill($this->getUser(), $car, $rentOptions);
             }
-            $this->carService->UpdateCarQuantity($car->getId(), $quantity);
+            $this->carService->UpdateCarQuantity($car, $quantity);
         }
         $this->billingService->flushBill();
         $this->cartService->clear();
@@ -58,14 +63,13 @@ class BillController extends AbstractController
 
     /**
      * @Route("/pay-{id}", name="pay")
-     * @param $id
+     * @param Billing $bill
      * @return Response
      */
-    public function billPay(int $id) :Response
+    public function billPay(Billing $bill) :Response
     {
 
-        $bill = $this->billingService->getBill($id);
-        $car = $this->carService->getCar($bill->getIdCar()->getId());
+        $car = $bill->getIdCar();
 
         $nbDays = $bill->getStartDate()->diff(new \DateTime('now'))->days;
         if($nbDays == 0){
@@ -82,15 +86,13 @@ class BillController extends AbstractController
 
     /**
      * @Route("/update/{id}", name="update")
-     * @param int $id
+     * @param Billing $bill
      * @return Response
      */
-    public function updateBill (int $id) :Response
+    public function updateBill (Billing $bill) :Response
     {
-        $bill = $this->billingService->getBill($id);
-
         $this->billingService->payBill($bill);
-        
+
         return $this->redirectToRoute('user_space_client_rentals', [
             'id' => $bill->getIdUser()->getId()
         ]);

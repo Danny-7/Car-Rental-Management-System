@@ -19,4 +19,62 @@ class BillingRepository extends ServiceEntityRepository
         parent::__construct($registry, Billing::class);
     }
 
+    public function findAllBills(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.idUser', 'u')
+            ->innerJoin('b.idCar', 'c')
+            ->addSelect('u')
+            ->addSelect('c')
+            ->getQuery()
+            ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+    public function findAllBillsOfCustomer(int $idUser): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.idUser', 'u')
+            ->innerJoin('b.idCar', 'c')
+            ->andWhere('b.idUser = :id')
+            ->setParameter('id', $idUser)
+            ->addSelect('u')
+            ->addSelect('c')
+            ->getQuery()
+            ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+
+    /**
+     * Return all bills of a customer with an option (returned or not)
+     * @param int $idUser
+     * @param bool $isReturned
+     * @return array
+     */
+    public function findAllBillsOfCustomerWithOption(int $idUser, bool $isReturned): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.idUser', 'u')
+            ->innerJoin('b.idCar', 'c')
+            ->andWhere('b.idUser = :id')
+            ->andWhere('b.returned = :val')
+            ->setParameter('id', $idUser)
+            ->setParameter('val', $isReturned)
+            ->addSelect('u')
+            ->addSelect('c')
+            ->getQuery()
+            ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+    public function findAllBillsOfRenter(int $idUser)
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.idUser', 'u')
+            ->innerJoin('b.idCar', 'c')
+            ->andWhere('c.idOwner = :id')
+            ->setParameter('id', $idUser)
+            ->addSelect('u')
+            ->addSelect('c')
+            ->getQuery()
+            ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
 }

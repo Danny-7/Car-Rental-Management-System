@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Billing;
+use App\Entity\User;
 use App\Service\Car\CarService;
 use App\Service\User\UserService;
 use App\Service\Bill\BillingService;
@@ -34,7 +36,11 @@ class UserSpaceController extends AbstractController
      */
     public function index() :Response
     {
-        $infos = $this->billingService->getDashboardInfo($this->getUser()->getId());
+        /**
+         * @var User $customer
+         */
+        $customer = $this->getUser();
+        $infos = $this->billingService->getDashboardInfo($customer, 'CUSTOMER');
         return $this->render("user_space/dashboard.html.twig", [
             'infos' => $infos
         ]);
@@ -44,37 +50,36 @@ class UserSpaceController extends AbstractController
     /**
      * Show actually cars rented ( not returned )
      * @Route("/client/rentals-{id}", name="client_rentals")
-     * @param int $id
+     * @param User $customer
      * @return Response
      */
-    public function showRentals(int $id) :Response
+    public function showRentals(User $customer) :Response
     {
-        $bills = $this->billingService->showBillsOfUserNotReturned($id);
+        $bills = $this->billingService->showBillsOfCustomerNotReturned($customer);
         $billsFormatted = array();
         foreach ($bills as $bill) {
-            $car = $this->carService->getCar($bill->getIdCar()->getId());
+            $car = $bill->getIdCar();
             array_push($billsFormatted, [$bill, $car]);
         }
-
         return $this->render('user_space/client/rentals.html.twig', [
             'bills' => $billsFormatted,
-            'id' => $this->getUser()->getId()
+            'id' => $customer->getId()
         ]);
     }
 
     /**
      * Show all bills of the client
      * @Route("/client/bills-{id}", name="client_bills")
-     * @param int $id
+     * @param User $customer
      * @return Response
      */
-    public function showBills(int $id) :Response
+    public function showBills(User $customer) :Response
     {
-        $bills = $this->billingService->showBillsOfUser($id);
+        $bills = $this->billingService->showBillsOfCustomer($customer);
         $billsFormatted = array();
         foreach ($bills as $bill) {
-            $car = $this->carService->getCar($bill->getIdCar()->getId());
-            $renter = $this->userService->getUser($bill->getIdUser()->getId());
+            $car = $bill->getIdCar();
+            $renter =  $bill->getIdUser();
             array_push($billsFormatted, [$bill, $car, $renter]);
         }
         return $this->render('user_space/client/bills.html.twig', [
@@ -82,34 +87,15 @@ class UserSpaceController extends AbstractController
         ]);
     }
 
-    private function arrangeBills(array $bills) :array
-    {
-        $filteredBills = array();
-        foreach ($bills as $bill) {
-            $car = $this->carService->getCar($bill->getIdCar()->getId());
-            $owner = $this->userService->getUser($car->getIdOwner()->getId());
-            $renter = $this->userService->getUser($bill->getIdUser()->getId());
-            if ($owner->getId() === $this->getUser()->getId()) {
-                array_push($filteredBills, [$bill, $car, $renter]);
-            }
-        }
-        return $filteredBills;
-    }
-
-
     /**
      * @Route("/car/return/{id}", name="car_return")
-     * @param int $id
+     * @param Billing $bill
      * @return Response
      */
-    public function returnCar(int $id) :Response
+    public function returnCar(Billing $bill) :Response
     {
-
-        $bill = $this->billingService->getBill($id);
-
-        $this->carService->return($bill->getIdCar()->getId());
-
-        $this->billingService->returnCarBill($id);
+        $this->carService->return($bill->getIdCar());
+        $this->billingService->returnCarBill($bill);
 
         $this->addFlash('message', "Le véhicule à bien été rendu");
         return $this->redirectToRoute('comment_add', [
@@ -118,4 +104,3 @@ class UserSpaceController extends AbstractController
     }
 
 }
-

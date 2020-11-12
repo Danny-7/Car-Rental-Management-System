@@ -24,11 +24,10 @@ class UserService
         $this->entityManager = $entityManager;
     }
 
-    public function getUser(int $id) :User
+    public function getUser(int $id): User
     {
-        return $this->userRepository->findOneBy(['id' => $id]);
+        return $this->userRepository->find($id);
     }
-
     public function getUsers() :array
     {
         return $this->userRepository->findAll();

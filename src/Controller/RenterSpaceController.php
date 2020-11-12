@@ -4,7 +4,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Car;
 use App\Entity\SearchBillData;
+use App\Entity\User;
 use App\Form\BillsFilterType;
 use App\Form\NewCarType;
 use App\Service\Bill\BillingService;
@@ -42,7 +44,11 @@ class RenterSpaceController extends AbstractController
      */
     public function index(): Response
     {
-        $infos = $this->billingService->getDashboardInfo($this->getUser()->getId());
+        /**
+         * @var User $renter
+         */
+        $renter = $this->getUser();
+        $infos = $this->billingService->getDashboardInfo($renter, 'RENTER');
         return $this->render("user_space/dashboard.html.twig", [
             'infos' => $infos
         ]);
@@ -50,12 +56,12 @@ class RenterSpaceController extends AbstractController
 
     /**
      * @Route("/cars/{id}", name="cars")
-     * @param int $id
+     * @param User $renter
      * @return Response
      */
-    public function showCars(int $id) :Response
+    public function showCars(User $renter) :Response
     {
-        $cars = $this->carService->getAllCarsByOwnerId($id);
+        $cars = $this->carService->getAllCarsByOwnerId($renter);
         return $this->render("user_space/renter/cars.html.twig", [
             'cars' => $cars
         ]);
@@ -65,12 +71,9 @@ class RenterSpaceController extends AbstractController
     {
         $filteredBills = array();
         foreach ($bills as $bill){
-            $car = $this->carService->getCar($bill->getIdCar()->getId());
-            $owner = $this->userService->getUser($car->getIdOwner()->getId());
-            $renter =  $this->userService->getUser($bill->getIdUser()->getId());
-            if($owner->getId() === $this->getUser()->getId()){
-                array_push($filteredBills, [$bill, $car, $renter]);
-            }
+            $car = $bill->getIdCar();
+            $renter = $bill->getIdUser();
+            array_push($filteredBills, [$bill, $car, $renter]);
         }
         return $filteredBills;
     }
@@ -86,14 +89,18 @@ class RenterSpaceController extends AbstractController
         $searchData = new SearchBillData();
         $searchForm = $this->createForm(BillsFilterType::class, $searchData);
 
-        $filteredBills = array();
         $searchForm->handleRequest($request);
         if($searchForm->isSubmitted() && $searchForm->isValid()){
             $bills = $this->billingService->showBillsOfCustomer($searchData->getUser());
             $filteredBills = $this->arrangeBills($bills);
         }
         else {
-            $bills = $this->billingService->showBills();
+            /**
+             * @var User $user
+             */
+            $user = $this->getUser();
+
+            $bills = $this->billingService->showBillsOfRenter($user);
             $filteredBills = $this->arrangeBills($bills);
         }
 
@@ -107,13 +114,11 @@ class RenterSpaceController extends AbstractController
      * @Route("car/edit/{id}", name="car_edit")
      * @param Request $request
      * @param FileUploader $fileUploader
-     * @param int $id
+     * @param Car $car
      * @return Response
      */
-    public function editCar(Request $request, FileUploader $fileUploader, int $id) :Response
+    public function editCar(Request $request, FileUploader $fileUploader, Car $car) :Response
     {
-        $car = $this->carService->getCar($id);
-
         $form = $this->createForm(NewCarType::class, $car);
 
         $form->handleRequest($request);
@@ -152,12 +157,12 @@ class RenterSpaceController extends AbstractController
 
     /** The renter can remove a car from his list
      * @Route("/car/delete/{id}", name="car_delete")
-     * @param int $id
+     * @param Car $car
      * @return Response
      */
-    public function removeCar(int $id) :Response
+    public function removeCar(Car $car) :Response
     {
-        $this->carService->remove($id);
+        $this->carService->remove($car);
         $this->addFlash('message', "Votre véhicule a bien été supprimé");
         return $this->redirectToRoute("user_space_renter_cars");
     }

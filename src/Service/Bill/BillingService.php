@@ -32,13 +32,19 @@ class BillingService
         $this->carService = $carService;
     }
 
-    public function getDashboardInfo(?int $idUser) : array
+    public function getDashboardInfo(?User $user, string $role) : array
     {
-        if($idUser){
-            $bills = $this->repository->findBy(['idUser' => $idUser]);
+        $bills = array();
+        if($user){
+            if($role == 'RENTER'){
+                $bills = $this->repository->findAllBillsOfRenter($user->getId());
+            }
+            else {
+                $bills = $this->repository->findAllBillsOfCustomer($user->getId());
+            }
         }
         else {
-            $bills = $this->repository->findAll();
+            $bills = $this->repository->findAllBills();
         }
         $nbRentedCars = $nbReturnedCars = $nbAvailableCars = $totalAmountPaid = $nbUnpaid = $amountCurrMonthRentals = 0;
 
@@ -63,11 +69,16 @@ class BillingService
         return array($nbRentedCars, $nbReturnedCars, $nbAvailableCars, $totalAmountPaid, $nbUnpaid, $amountCurrMonthRentals);
     }
 
-    public function createBill( UserInterface $user, Car $car, array $rentOptions)
+    public function createBill(UserInterface $user, Car $car, array $rentOptions)
     {
         $hasReduce = false;
         $hasEndDate = false;
-        $bills = $this->showBillsOfUser($user->getId());
+
+        $user_tmp = $user;
+        /**
+         * @var User $user_tmp
+         */
+        $bills = $this->showBillsOfCustomer($user_tmp);
         $nbRent = count($bills);
 
         if($nbRent > self::NB_VIP_CAR){
@@ -80,7 +91,7 @@ class BillingService
             $hasEndDate = true;
             $nbDays = $rentOptions['startDate']->diff($rentOptions['endDate'])->days;
         }
-        
+
 
         $bill = new Billing();
         $bill->setIdCar($car)
@@ -88,78 +99,65 @@ class BillingService
             ->setPrice($hasReduce ? ($car->getAmount()*$nbDays*(1-self::REDUCE_PCT)) :
                 $car->getAmount()*$nbDays)
             ->setStartDate($rentOptions['startDate']);
-            if($hasEndDate){
-                $bill->setEndDate($rentOptions['endDate']);
-            }
-            $bill->setPaid($rentOptions['paid'])
-                ->setReturned(false);
+        if($hasEndDate){
+            $bill->setEndDate($rentOptions['endDate']);
+        }
+        $bill->setPaid($rentOptions['paid'])
+            ->setReturned(false);
 
         $this->entityManager->persist($bill);
     }
 
-    public function removeBill (int $id)
+    public function removeBill (Billing $bill)
     {
-
-        $bill = $this->repository->find($id);
-
         $this->entityManager->remove($bill);
-        $this->entityManager->flush();
     }
 
-    public function returnCarBill (int $id)
+    /**
+     * @param Billing $bill
+     */
+    public function returnCarBill (Billing $bill)
     {
-
-        $bill = $this->repository->find($id);
-
         $bill->setReturned(true);
         $this->entityManager->flush();
 
     }
 
-    public function getBill(int $id) :Billing
+    public function flushBill()
     {
-        return $this->repository->findOneBy(['id' => $id]);
-    }
-
-    public function flushBill(){
         $this->entityManager->flush();
     }
 
     public function showBills() :array
     {
-        return $this->repository->findAll();
-    }
-
-    public function showBillsOfUser(int $id) :array
-    {
-        return $this->repository->findBy(['idUser' => $id]);
-    }
-
-    public function showBillsOfUserReturned(int $id) :array
-    {
-        return $this->repository->findBy([
-            'idUser' => $id,
-            'returned' => true            
-            ]);
-    }
-
-    public function showBillsOfUserNotReturned(int $id) :array
-    {
-        return $this->repository->findBy([
-            'idUser' => $id,
-            'returned' => false           
-            ]);
+        return $this->repository->findAllBills();
     }
 
     public function showBillsOfCustomer(User $customer) :array
     {
-        return $this->showBillsOfUser($customer->getId());
+        return $this->repository->findAllBillsOfCustomer($customer->getId());
     }
 
+    public function showBillsOfRenter(User $renter)
+    {
+        return $this->repository->findAllBillsOfRenter($renter->getId());
+
+    }
+
+    public function showBillsOfCustomerReturned(User $customer) :array
+    {
+        return $this->repository->findAllBillsOfCustomerWithOption($customer->getId(), true);
+    }
+
+    public function showBillsOfCustomerNotReturned(User $customer) :array
+    {
+        return $this->repository->findAllBillsOfCustomerWithOption($customer->getId(), false);
+    }
 
     public function payBill(Billing $bill)
     {
         $bill->setPaid(true);
         $this->entityManager->flush();
     }
+
 }

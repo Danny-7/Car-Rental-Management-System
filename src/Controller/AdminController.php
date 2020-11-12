@@ -44,7 +44,7 @@ class AdminController extends AbstractController
      */
     public function index() :Response
     {
-        $infos = $this->billingService->getDashboardInfo(null);
+        $infos = $this->billingService->getDashboardInfo(null, 'ADMIN');
         return $this->render("admin/index.html.twig", [
             'infos' => $infos
         ]);
@@ -66,13 +66,11 @@ class AdminController extends AbstractController
      * @Route("/car/edit/{id}", name="car_edit")
      * @param Request $request
      * @param FileUploader $fileUploader
-     * @param int $id
+     * @param Car $car
      * @return Response
      */
-    public function editCar(Request $request, FileUploader $fileUploader, int $id) :Response
+    public function editCar(Request $request, FileUploader $fileUploader, Car $car) :Response
     {
-        $car = $this->carService->getCar($id);
-
         $form = $this->createForm(NewCarType::class, $car);
 
         $form->handleRequest($request);
@@ -111,12 +109,12 @@ class AdminController extends AbstractController
 
     /** The renter can remove a car from his list
      * @Route("/car/delete/{id}", name="car_delete")
-     * @param int $id
+     * @param Car $car
      * @return Response
      */
-    public function removeCar(int $id) :Response
+    public function removeCar(Car $car) :Response
     {
-        $this->carService->remove($id);
+        $this->carService->remove($car);
         $this->addFlash('message', "Votre véhicule a bien été supprimé");
         return $this->redirectToRoute("admin_cars");
     }
@@ -171,8 +169,8 @@ class AdminController extends AbstractController
     {
         $filteredBills = array();
         foreach ($bills as $bill){
-            $car = $this->carService->getCar($bill->getIdCar()->getId());
-            $renter =  $this->userService->getUser($bill->getIdUser()->getId());
+            $car = $bill->getIdCar();
+            $renter =  $bill->getIdUser();
             array_push($filteredBills, [$bill, $car, $renter]);
         }
         return $filteredBills;

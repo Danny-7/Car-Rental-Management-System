@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Car;
 use App\Service\Cart\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -43,12 +44,12 @@ class CartController extends AbstractController
 
     /**
      * @Route("/remove/{id}", name="remove")
-     * @param $id
+     * @param Car $car
      * @return RedirectResponse
      */
-    public function remove($id) :Response
+    public function remove(Car $car) :Response
     {
-        $this->cartService->remove($id);
+        $this->cartService->remove($car->getId());
         return $this->redirectToRoute('cart_index');
     }
 

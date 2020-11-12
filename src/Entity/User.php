@@ -106,18 +106,12 @@ class User implements UserInterface
         return [$this->getRole()];
     }
 
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
+    public function getSalt(){}
 
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->getName();
     }
 
-    public function eraseCredentials()
-    {
-        // TODO: Implement eraseCredentials() method.
-    }
+    public function eraseCredentials(){}
 }
