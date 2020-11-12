@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Entity\Billing;
 use App\Service\Car\CarService;
 use App\Repository\BillingRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -73,6 +75,7 @@ class BillingService
     {
         $hasReduce = false;
         $hasEndDate = false;
+        $isPaid = false;
 
         $user_tmp = $user;
         /**
@@ -86,12 +89,17 @@ class BillingService
         }
 
         $nbDays = (int)date('t');
-
         if($rentOptions['endDate']){
-            $hasEndDate = true;
+            /**
+             * @var DateTimeInterface $date
+             */
+            $date = $rentOptions['endDate'];
+            $currDate = new DateTime();
+            if($currDate->format('n') === $date->format('n') ) {
+                $isPaid = true;
+            }
             $nbDays = $rentOptions['startDate']->diff($rentOptions['endDate'])->days;
         }
-
 
         $bill = new Billing();
         $bill->setIdCar($car)
@@ -102,7 +110,7 @@ class BillingService
         if($hasEndDate){
             $bill->setEndDate($rentOptions['endDate']);
         }
-        $bill->setPaid($rentOptions['paid'])
+        $bill->setPaid($isPaid)
             ->setReturned(false);
 
         $this->entityManager->persist($bill);
