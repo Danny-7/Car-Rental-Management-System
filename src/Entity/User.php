@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -27,7 +27,7 @@ class User implements UserInterface
      *     minMessage = "Votre nom est trop court il doit contenir au moins 2 caractères",
      *     maxMessage = "Votre nom est trop long il doit faire au maximum 255 caractères"
      * )
-     * @Assert\Regex(pattern="/^[a-zA-Z]{1,15}$/", message="Veuillez entrer un nom valide")
+     * @Assert\Regex(pattern="/\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/", message="Veuillez entrer un nom valide")
      */
     private ?string $name;
 
