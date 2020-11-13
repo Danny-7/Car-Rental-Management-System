@@ -1,38 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Régler une commande {% endblock %}
+{% block title %}
+	Régler une commande
+{% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="container-fluid w-75">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Location en jours</th>
-                        <th>Montant du véhicule / J</th>
-                        <th>Montant de la location</th>
-                        <th>Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ car.type }}</td>
-                        <td>{{ nbDays }}</td>
-                        <td>{{ car.amount }} €</td>
-                        <td>{{ car.amount*nbDays }} €</td>
-                        <td><img src="{{ asset('uploads/cars/') }}{{ car.image }}" alt="{{ car.type }}" style="height: 50px; object-fit: cover"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">Total</td>
-                        <td>{{ car.amount*nbDays }} €</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="row float-right">
-                <a href="{{ path('bill_update', { id:bill.id }) }}" class="btn btn-success">Régler la commande</a>
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid">
+		<div class="container-fluid w-75">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="align-middle text-center">Type</th>
+						<th class="align-middle text-center">Location en jours</th>
+						<th class="align-middle text-center">Montant du véhicule / J</th>
+						<th class="align-middle text-center">Montant de la location</th>
+						<th class="align-middle text-center">Image</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="align-middle text-center">{{ car.type }}</td>
+						<td class="align-middle text-center">{{ nbDays }}</td>
+						<td class="align-middle text-center">{{ car.amount }}
+							€</td>
+						<td class="align-middle text-center">{{ car.amount*nbDays }}
+							€</td>
+						<td class="align-middle text-center"><img src="{{ asset('uploads/cars/') }}{{ car.image }}" alt="{{ car.type }}" style="height: 50px; object-fit: cover"></td>
+					</tr>
+					<tr>
+						<td colspan="6">Total</td>
+						<td class="align-middle text-center">{{ car.amount*nbDays }}
+							€</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="row float-right">
+				<a href="{{ path('bill_update', { id:bill.id }) }}" class="btn btn-success">Régler la commande</a>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

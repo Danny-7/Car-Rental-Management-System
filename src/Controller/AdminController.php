@@ -6,14 +6,14 @@ namespace App\Controller;
 
 use App\Entity\Car;
 use App\Form\NewCarType;
-use App\Service\Bill\BillingService;
 use App\Service\Car\CarService;
-use App\Service\FileUpload\FileUploader;
 use App\Service\User\UserService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\Bill\BillingService;
+use App\Service\FileUpload\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class AdminController
@@ -102,7 +102,7 @@ class AdminController extends AbstractController
 
         }
 
-        return $this->render("car/car.new.html.twig", [
+        return $this->render("admin/car.new.html.twig", [
             'form' => $form->createView()
         ]);
     }
@@ -154,9 +154,7 @@ class AdminController extends AbstractController
             $car->setIdOwner($this->getUser());
 
             $this->carService->add($car);
-            return $this->render('admin/cars.html.twig', [
-                'v_type' => $car->getType()
-            ]);
+            return $this->redirectToRoute('admin_cars');
         }
 
         return $this->render('admin/car.new.html.twig', [

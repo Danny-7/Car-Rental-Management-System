@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Billing;
 use App\Entity\Car;
+use App\Entity\Billing;
 use App\Form\NewCarType;
 use App\Form\RentCarType;
 use App\Service\Car\CarService;
 use App\Service\Cart\CartService;
-use App\Service\Bill\BillingService;
 use App\Service\User\UserService;
+use App\Service\Bill\BillingService;
 use App\Service\Comment\CommentService;
 use App\Service\FileUpload\FileUploader;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,9 +87,8 @@ class CarController extends AbstractController
             $car->setIdOwner($this->getUser());
 
             $this->carService->add($car);
-            return $this->render('user_space/index.html.twig', [
-                'v_type' => $car->getType()
-            ]);
+
+            return $this->redirectToRoute('user_space_renter_cars');
         }
 
         return $this->render('car/car.new.html.twig', [

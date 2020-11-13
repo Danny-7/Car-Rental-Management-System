@@ -1,33 +1,33 @@
 /* home page style */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .home {
-    background-image: url("../images/luxury-car-background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center
+  background-image: url("../images/luxury-car-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
 }
 
 /* navbar cart */
 .cart-count {
-    position: absolute;
-    top: -3px;
-    right: 0;
-    height: fit-content;
-    font-size: 12px;
-    background: #131313;
-    color: #f7f7f7;
-    padding: 2px 5px;
-    vertical-align: top;
-    margin-left: -9px;
+  position: absolute;
+  top: -3px;
+  right: 0;
+  height: fit-content;
+  font-size: 12px;
+  background: #131313;
+  color: #f7f7f7;
+  padding: 2px 5px;
+  vertical-align: top;
+  margin-left: -9px;
 }
 
 .nav-link[data-toggle].collapsed:before {
-    content: " ▾";
+  content: " ▾";
 }
 .nav-link[data-toggle]:not(.collapsed):before {
-    content: " ▴";
+  content: " ▴";
 }

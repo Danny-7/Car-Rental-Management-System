@@ -1,39 +1,38 @@
 {% extends 'admin/index.html.twig' %}
 
 {% block title %}
-    Les utilisateurs
+	Les utilisateurs
 {% endblock %}
 
 {% block dashboard %}
-    <div class="container-fluid h-100">
-        <div>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Adresse email</th>
-                    <th>Role</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in users %}
-                    <tr>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>
-                            {% if user.role == 'ROLE_CLIENT' %}
-                                Entreprise
-                            {% elseif user.role == 'ROLE_RENTER' %}
-                                Loueur
-                            {% else %}
-                                Administrateur
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="container-fluid h-100">
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="align-middle text-center">Nom</th>
+						<th class="align-middle text-center">Adresse email</th>
+						<th class="align-middle text-center">Role</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td class="align-middle text-center">{{ user.name }}</td>
+							<td class="align-middle text-center">{{ user.email }}</td>
+							<td class="align-middle text-center">
+								{% if user.role == 'ROLE_CLIENT' %}
+									Entreprise
+								{% elseif user.role == 'ROLE_RENTER' %}
+									Loueur
+								{% else %}
+									Administrateur
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 {% endblock %}
-

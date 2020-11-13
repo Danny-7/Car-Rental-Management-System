@@ -1,53 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre panier{% endblock %}
+{% block title %}Votre panier
+{% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="container-fluid w-75">
-            {% if items | length > 0 %}
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Quantité</th>
-                            <th>Location en jours</th>
-                            <th>Montant du véhicule / J</th>
-                            <th>Montant de la location</th>
-                            <th>Image</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in items %}
-                            <tr>
-                                <td>{{ item.item.type }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td>{{ item.nbDays }}</td>
-                                <td>{{ item.item.amount }} €</td>
-                                <td>{{ item.item.amount*item.quantity*item.nbDays }} €</td>
-                                <td><img src="{{ asset('uploads/cars/') }}{{ item.item.image }}" alt="{{ item.item.type }}" style="height: 50px; object-fit: cover"></td>
-                                <td><a href="{{ path('cart_remove', { 'id': item.item.id }) }}" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </a></td>
+	<div class="container-fluid">
+		<div class="container-fluid w-75">
+			{% if items | length > 0 %}
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="align-middle text-center">Type</th>
+							<th class="align-middle text-center">Quantité</th>
+							<th class="align-middle text-center">Location en jours</th>
+							<th class="align-middle text-center">Montant du véhicule / J</th>
+							<th class="align-middle text-center">Montant de la location</th>
+							<th class="align-middle text-center">Image</th>
+							<th class="align-middle text-center"></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in items %}
+							<tr>
+								<td class="align-middle text-center">{{ item.item.type }}</td>
+								<td class="align-middle text-center">{{ item.quantity }}</td>
+								<td class="align-middle text-center">{{ item.nbDays }}</td>
+								<td class="align-middle text-center">{{ item.item.amount }}
+									€</td>
+								<td class="align-middle text-center">{{ item.item.amount*item.quantity*item.nbDays }}
+									€</td>
+								<td class="align-middle text-center"><img src="{{ asset('uploads/cars/') }}{{ item.item.image }}" alt="{{ item.item.type }}" style="height: 50px; object-fit: cover"></td>
+								<td class="align-middle text-center">
+									<a href="{{ path('cart_remove', { 'id': item.item.id }) }}" class="btn btn-danger btn-sm">
+										<i class="fas fa-trash"></i>
+									</a>
+								</td>
 
-                            </tr>
-                        {% endfor %}
-                        <tr>
-                            <td colspan="6">Total</td>
-                            <td>{{ totalItems }} €</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="row float-right">
-                    <a href="{{ path('bill_new') }}" class="btn btn-success">Confirmer la commande</a>
-                </div>
-            {% else %}
-                <p></p>
-                <h1>Votre panier est vide !</h1>
-                <p></p>
-                <a href="{{ path('cars') }}" class="btn btn-primary">Retourner voir nos voitures</a>
-            {% endif %}
-        </div>
-    </div>
+							</tr>
+						{% endfor %}
+						<tr>
+							<td colspan="6" class="align-middle text-center">Total</td>
+							<td class="align-middle text-center">{{ totalItems }}
+								€</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row float-right">
+					<a href="{{ path('bill_new') }}" class="btn btn-success">Confirmer la commande</a>
+				</div>
+			{% else %}
+				<p></p>
+				<h1>Votre panier est vide !</h1>
+				<p></p>
+				<a href="{{ path('cars') }}" class="btn btn-primary">Retourner voir nos voitures</a>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}
