@@ -90,6 +90,7 @@ class BillingService
 
         $nbDays = (int)date('t');
         if($rentOptions['endDate']){
+            $hasEndDate = true;
             /**
              * @var DateTimeInterface $date
              */
