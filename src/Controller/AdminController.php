@@ -113,7 +113,9 @@ class AdminController extends AbstractController
      * @return Response
      */
     public function removeCar(Car $car) :Response
-    {
+    {   if($this->billingService->hasBillsRelated($car)){
+            return $this->redirectToRoute('admin_cars');
+        }
         $this->carService->remove($car);
         $this->addFlash('message', "Votre véhicule a bien été supprimé");
         return $this->redirectToRoute("admin_cars");

@@ -146,7 +146,9 @@ class RenterSpaceController extends AbstractController
             $this->carService->add($car);
             $this->addFlash('message',"Votre véhicule à bien été modifié");
 
-            return $this->redirectToRoute('user_space_renter_cars');
+            return $this->redirectToRoute('user_space_renter_cars', [
+                'id' => $this->getUser()->getId()
+            ]);
 
         }
 
@@ -162,9 +164,16 @@ class RenterSpaceController extends AbstractController
      */
     public function removeCar(Car $car) :Response
     {
+        if($this->billingService->hasBillsRelated($car)){
+            return $this->redirectToRoute('user_space_renter_cars',[
+                'id' => $this->getUser()->getId()
+            ]);
+        }
         $this->carService->remove($car);
         $this->addFlash('message', "Votre véhicule a bien été supprimé");
-        return $this->redirectToRoute("user_space_renter_cars");
+        return $this->redirectToRoute("user_space_renter_cars", [
+            'id' => $this->getUser()->getId()
+        ]);
     }
 
 }

@@ -87,8 +87,10 @@ class CarController extends AbstractController
             $car->setIdOwner($this->getUser());
 
             $this->carService->add($car);
-
-            return $this->redirectToRoute('user_space_renter_cars');
+            
+            return $this->redirectToRoute('user_space_renter_cars', [
+                'id' => $this->getUser()->getId()
+            ]);
         }
 
         return $this->render('car/car.new.html.twig', [

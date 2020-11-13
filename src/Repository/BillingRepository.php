@@ -77,4 +77,15 @@ class BillingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
+
+    public function findAllBillsOfCar(int $idCar): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.idCar', 'c')
+            ->andWhere('b.idCar = :id')
+            ->setParameter('id', $idCar)
+            ->select('b')
+            ->getQuery()
+            ->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
 }

@@ -3,13 +3,13 @@
 
 namespace App\Service\Bill;
 
+use DateTime;
 use App\Entity\Car;
 use App\Entity\User;
+use DateTimeInterface;
 use App\Entity\Billing;
 use App\Service\Car\CarService;
 use App\Repository\BillingRepository;
-use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -160,6 +160,11 @@ class BillingService
     public function showBillsOfCustomerNotReturned(User $customer) :array
     {
         return $this->repository->findAllBillsOfCustomerWithOption($customer->getId(), false);
+    }
+
+    public function hasBillsRelated(Car $car): bool
+    {
+        return count($this->repository->findAllBillsOfCar($car->getId())) > 0;
     }
 
     public function payBill(Billing $bill)
