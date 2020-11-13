@@ -33,7 +33,11 @@
                     <tr>
                         <td class="align-middle text-center">{{ bill[1].type }}</td>
                         <td class="align-middle text-center">{{ bill[0].startDate | date('d-m-Y') }}</td>
-                        <td class="align-middle text-center">{{ bill[0].endDate | date('d-m-Y') }}</td>
+                        {% if bill[0].endDate != null %}
+                            <td class="align-middle text-center">{{ bill[0].endDate | date('d-m-Y') }}</td>
+                        {% else %}
+                            <td class="align-middle text-center">-</td>
+                        {% endif %}
                         <td class="align-middle text-center"><img src="{{ asset('uploads/cars/') }}{{ bill[1].image }}" alt="{{ bill[1].type }}" style="height: 100px; object-fit: cover"></td>
 
                         {% if bill[0].paid == false %}
