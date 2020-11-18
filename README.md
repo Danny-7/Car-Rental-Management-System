@@ -79,7 +79,7 @@ Chaque utilisateur à un espace utilisateur dédié
 Cloner le repository
 
 ```
-git clone --single-branch -b release https://github.com/Danny-7/PHP-S3.git
+git clone --single-branch -b master https://github.com/Danny-7/Car-Rental-Management-System.git
 ```
 
 Installer les dépendances nécessaires du projet
